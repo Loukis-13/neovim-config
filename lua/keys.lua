@@ -21,9 +21,12 @@ vimp.imap('<C-y>', '<C-o>:red<Enter>')
 
 -- Terminal
 vimp.nmap("<C-j>", ":ToggleTerm<Enter>")
-vimp.imap("<C-j>", "<C-o>:ToggleTerm<Enter>i")
+vimp.imap("<C-j>", "<C-o>:ToggleTerm<Enter>")
 vimp.tnoremap("<Esc>", "<C-\\><C-n>")
 vimp.tnoremap("<C-j>", "<C-\\><C-n>:ToggleTerm<Enter>")
+
+-- Trouble Toggle
+vimp.nmap("<C-k>", ":TroubleToggle<CR>")
 
 -- Save and close
 vimp.nmap("<C-s>", ":w<CR>")

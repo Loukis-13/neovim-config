@@ -125,10 +125,10 @@ _G.packer_plugins = {
     path = "/home/loukis/.local/share/nvim/site/pack/packer/start/gruvbox",
     url = "https://github.com/morhetz/gruvbox"
   },
-  indentLine = {
+  ["indent-blankline.nvim"] = {
     loaded = true,
-    path = "/home/loukis/.local/share/nvim/site/pack/packer/start/indentLine",
-    url = "https://github.com/Yggdroot/indentLine"
+    path = "/home/loukis/.local/share/nvim/site/pack/packer/start/indent-blankline.nvim",
+    url = "https://github.com/lukas-reineke/indent-blankline.nvim"
   },
   ["killersheep.nvim"] = {
     config = { "\27LJ\2\nw\0\0\4\0\6\0\t6\0\0\0'\2\1\0B\0\2\0029\0\2\0005\2\4\0005\3\3\0=\3\5\2B\0\2\1K\0\1\0\fkeymaps\1\0\0\1\0\2\14move_left\v<Left>\15move_right\f<Right>\nsetup\16killersheep\frequire\0" },
@@ -149,7 +149,7 @@ _G.packer_plugins = {
     url = "https://github.com/VonHeikemen/lsp-zero.nvim"
   },
   ["lualine.nvim"] = {
-    config = { "\27LJ\2\nÆ\1\0\0\5\0\n\0\r6\0\0\0'\2\1\0B\0\2\0029\0\2\0005\2\b\0005\3\3\0005\4\4\0=\4\5\0035\4\6\0=\4\a\3=\3\t\2B\0\2\1K\0\1\0\foptions\1\0\0\23section_separators\1\0\2\nright\5\tleft\5\25component_separators\1\0\2\nright\6|\tleft\6|\1\0\2\ntheme\rcodedark\17globalstatus\2\nsetup\flualine\frequire\0" },
+    config = { "\27LJ\2\nÆ\1\0\0\5\0\n\0\r6\0\0\0'\2\1\0B\0\2\0029\0\2\0005\2\b\0005\3\3\0005\4\4\0=\4\5\0035\4\6\0=\4\a\3=\3\t\2B\0\2\1K\0\1\0\foptions\1\0\0\23section_separators\1\0\2\tleft\5\nright\5\25component_separators\1\0\2\tleft\6|\nright\6|\1\0\2\17globalstatus\2\ntheme\rcodedark\nsetup\flualine\frequire\0" },
     loaded = true,
     path = "/home/loukis/.local/share/nvim/site/pack/packer/start/lualine.nvim",
     url = "https://github.com/nvim-lualine/lualine.nvim"
@@ -165,7 +165,7 @@ _G.packer_plugins = {
     url = "https://github.com/williamboman/mason.nvim"
   },
   ["null-ls.nvim"] = {
-    config = { "\27LJ\2\n»\1\0\0\6\0\f\0\0216\0\0\0'\2\1\0B\0\2\0029\1\2\0005\3\n\0004\4\4\0009\5\3\0009\5\4\0059\5\5\5>\5\1\0049\5\3\0009\5\6\0059\5\a\5>\5\2\0049\5\3\0009\5\b\0059\5\t\5>\5\3\4=\4\v\3B\1\2\1K\0\1\0\fsources\1\0\0\nspell\15completion\veslint\16diagnostics\vstylua\15formatting\rbuiltins\nsetup\fnull-ls\frequire\0" },
+    config = { "\27LJ\2\nÑ\1\0\0\6\0\r\0\0256\0\0\0'\2\1\0B\0\2\0029\1\2\0005\3\v\0004\4\5\0009\5\3\0009\5\4\0059\5\5\5>\5\1\0049\5\3\0009\5\4\0059\5\6\5>\5\2\0049\5\3\0009\5\a\0059\5\b\5>\5\3\0049\5\3\0009\5\t\0059\5\n\5>\5\4\4=\4\f\3B\1\2\1K\0\1\0\fsources\1\0\0\nspell\15completion\veslint\16diagnostics\nblack\vstylua\15formatting\rbuiltins\nsetup\fnull-ls\frequire\0" },
     loaded = true,
     path = "/home/loukis/.local/share/nvim/site/pack/packer/start/null-ls.nvim",
     url = "https://github.com/jose-elias-alvarez/null-ls.nvim"
@@ -197,7 +197,7 @@ _G.packer_plugins = {
     url = "https://github.com/xiyaowong/nvim-transparent"
   },
   ["nvim-tree.lua"] = {
-    config = { "\27LJ\2\nj\0\0\4\0\6\0\t6\0\0\0'\2\1\0B\0\2\0029\0\2\0005\2\3\0005\3\4\0=\3\5\2B\0\2\1K\0\1\0\ffilters\1\0\1\rdotfiles\2\1\0\1\18open_on_setup\2\nsetup\14nvim-tree\frequire\0" },
+    config = { "\27LJ\2\nÿ\1\0\1\6\0\14\1*9\1\0\0\a\1\1\0X\1\a€6\1\2\0009\1\3\0019\2\4\0008\1\2\0019\1\5\1\6\1\1\0X\1\2€+\1\1\0X\2\1€+\1\2\0006\2\2\0009\2\6\0029\2\a\0029\4\0\0B\2\2\2\b\2\0\0X\2\2€+\2\1\0X\3\1€+\2\2\0\14\0\1\0X\3\3€\14\0\2\0X\3\1€K\0\1\0\15\0\2\0X\3\5€6\3\2\0009\3\b\0039\3\t\0039\5\0\0B\3\2\0016\3\n\0'\5\v\0B\3\2\0029\3\f\0039\3\r\3B\3\1\1K\0\1\0\topen\ttree\18nvim-tree.api\frequire\acd\bcmd\16isdirectory\afn\fbuftype\bbuf\abo\bvim\5\tfile\2±\1\1\0\5\0\r\0\0176\0\0\0'\2\1\0B\0\2\0029\0\2\0005\2\4\0005\3\3\0=\3\5\2B\0\2\0016\0\6\0009\0\a\0009\0\b\0005\2\t\0005\3\v\0003\4\n\0=\4\f\3B\0\3\1K\0\1\0\rcallback\1\0\0\0\1\2\0\0\rVimEnter\24nvim_create_autocmd\bapi\bvim\ffilters\1\0\0\1\0\1\rdotfiles\2\nsetup\14nvim-tree\frequire\0" },
     loaded = true,
     path = "/home/loukis/.local/share/nvim/site/pack/packer/start/nvim-tree.lua",
     url = "https://github.com/kyazdani42/nvim-tree.lua"
@@ -218,7 +218,7 @@ _G.packer_plugins = {
     url = "https://github.com/nvim-lua/plenary.nvim"
   },
   ["rust-tools.nvim"] = {
-    config = { "\27LJ\2\n‹\2\0\0\a\0\18\0\0216\0\0\0'\2\1\0B\0\2\0029\0\2\0005\2\b\0005\3\4\0005\4\3\0=\4\5\0035\4\6\0=\4\a\3=\3\t\0025\3\15\0005\4\r\0005\5\v\0005\6\n\0=\6\f\5=\5\14\4=\4\16\3=\3\17\2B\0\2\1K\0\1\0\vserver\rsettings\1\0\0\18rust-analyzer\1\0\0\16checkOnSave\1\0\0\1\0\1\fcommand\vclippy\ntools\1\0\0\16inlay_hints\1\0\2\14highlight\15Identifier\tauto\2\14runnables\1\0\0\1\0\1\18use_telescope\2\nsetup\15rust-tools\frequire\0" },
+    config = { "\27LJ\2\n¡\2\0\0\a\0\18\0\0216\0\0\0'\2\1\0B\0\2\0029\0\2\0005\2\b\0005\3\4\0005\4\3\0=\4\5\0035\4\6\0=\4\a\3=\3\t\0025\3\15\0005\4\r\0005\5\v\0005\6\n\0=\6\f\5=\5\14\4=\4\16\3=\3\17\2B\0\2\1K\0\1\0\vserver\rsettings\1\0\0\18rust-analyzer\1\0\0\16checkOnSave\1\0\0\1\0\1\fcommand\vclippy\ntools\1\0\0\16inlay_hints\1\0\3\tauto\2\14highlight\15Identifier\25show_parameter_hints\1\14runnables\1\0\0\1\0\1\18use_telescope\2\nsetup\15rust-tools\frequire\0" },
     loaded = true,
     path = "/home/loukis/.local/share/nvim/site/pack/packer/start/rust-tools.nvim",
     url = "https://github.com/simrat39/rust-tools.nvim"
@@ -254,54 +254,54 @@ _G.packer_plugins = {
 }
 
 time([[Defining packer_plugins]], false)
--- Config for: lsp-zero.nvim
-time([[Config for lsp-zero.nvim]], true)
-try_loadstring("\27LJ\2\nf\0\0\4\0\6\0\f6\0\0\0'\2\1\0B\0\2\0029\1\2\0'\3\3\0B\1\2\0019\1\4\0B\1\1\0016\1\0\0'\3\5\0B\1\2\1K\0\1\0\tvars\nsetup\16recommended\vpreset\rlsp-zero\frequire\0", "config", "lsp-zero.nvim")
-time([[Config for lsp-zero.nvim]], false)
--- Config for: rust-tools.nvim
-time([[Config for rust-tools.nvim]], true)
-try_loadstring("\27LJ\2\n‹\2\0\0\a\0\18\0\0216\0\0\0'\2\1\0B\0\2\0029\0\2\0005\2\b\0005\3\4\0005\4\3\0=\4\5\0035\4\6\0=\4\a\3=\3\t\0025\3\15\0005\4\r\0005\5\v\0005\6\n\0=\6\f\5=\5\14\4=\4\16\3=\3\17\2B\0\2\1K\0\1\0\vserver\rsettings\1\0\0\18rust-analyzer\1\0\0\16checkOnSave\1\0\0\1\0\1\fcommand\vclippy\ntools\1\0\0\16inlay_hints\1\0\2\14highlight\15Identifier\tauto\2\14runnables\1\0\0\1\0\1\18use_telescope\2\nsetup\15rust-tools\frequire\0", "config", "rust-tools.nvim")
-time([[Config for rust-tools.nvim]], false)
--- Config for: lualine.nvim
-time([[Config for lualine.nvim]], true)
-try_loadstring("\27LJ\2\nÆ\1\0\0\5\0\n\0\r6\0\0\0'\2\1\0B\0\2\0029\0\2\0005\2\b\0005\3\3\0005\4\4\0=\4\5\0035\4\6\0=\4\a\3=\3\t\2B\0\2\1K\0\1\0\foptions\1\0\0\23section_separators\1\0\2\nright\5\tleft\5\25component_separators\1\0\2\nright\6|\tleft\6|\1\0\2\ntheme\rcodedark\17globalstatus\2\nsetup\flualine\frequire\0", "config", "lualine.nvim")
-time([[Config for lualine.nvim]], false)
+-- Config for: bufferline.nvim
+time([[Config for bufferline.nvim]], true)
+try_loadstring("\27LJ\2\n8\0\0\3\0\3\0\0066\0\0\0'\2\1\0B\0\2\0029\0\2\0B\0\1\1K\0\1\0\nsetup\15bufferline\frequire\0", "config", "bufferline.nvim")
+time([[Config for bufferline.nvim]], false)
+-- Config for: killersheep.nvim
+time([[Config for killersheep.nvim]], true)
+try_loadstring("\27LJ\2\nw\0\0\4\0\6\0\t6\0\0\0'\2\1\0B\0\2\0029\0\2\0005\2\4\0005\3\3\0=\3\5\2B\0\2\1K\0\1\0\fkeymaps\1\0\0\1\0\2\14move_left\v<Left>\15move_right\f<Right>\nsetup\16killersheep\frequire\0", "config", "killersheep.nvim")
+time([[Config for killersheep.nvim]], false)
+-- Config for: vimpeccable
+time([[Config for vimpeccable]], true)
+try_loadstring("\27LJ\2\n$\0\0\3\0\2\0\0046\0\0\0'\2\1\0B\0\2\1K\0\1\0\tkeys\frequire\0", "config", "vimpeccable")
+time([[Config for vimpeccable]], false)
+-- Config for: kommentary
+time([[Config for kommentary]], true)
+try_loadstring("\27LJ\2\n|\0\0\4\0\5\0\b6\0\0\0'\2\1\0B\0\2\0029\0\2\0'\2\3\0005\3\4\0B\0\3\1K\0\1\0\1\0\1 prefer_single_line_comments\2\fdefault\23configure_language\22kommentary.config\frequire\0", "config", "kommentary")
+time([[Config for kommentary]], false)
+-- Config for: null-ls.nvim
+time([[Config for null-ls.nvim]], true)
+try_loadstring("\27LJ\2\nÑ\1\0\0\6\0\r\0\0256\0\0\0'\2\1\0B\0\2\0029\1\2\0005\3\v\0004\4\5\0009\5\3\0009\5\4\0059\5\5\5>\5\1\0049\5\3\0009\5\4\0059\5\6\5>\5\2\0049\5\3\0009\5\a\0059\5\b\5>\5\3\0049\5\3\0009\5\t\0059\5\n\5>\5\4\4=\4\f\3B\1\2\1K\0\1\0\fsources\1\0\0\nspell\15completion\veslint\16diagnostics\nblack\vstylua\15formatting\rbuiltins\nsetup\fnull-ls\frequire\0", "config", "null-ls.nvim")
+time([[Config for null-ls.nvim]], false)
 -- Config for: toggleterm.nvim
 time([[Config for toggleterm.nvim]], true)
 try_loadstring("\27LJ\2\n8\0\0\3\0\3\0\0066\0\0\0'\2\1\0B\0\2\0029\0\2\0B\0\1\1K\0\1\0\nsetup\15toggleterm\frequire\0", "config", "toggleterm.nvim")
 time([[Config for toggleterm.nvim]], false)
 -- Config for: nvim-tree.lua
 time([[Config for nvim-tree.lua]], true)
-try_loadstring("\27LJ\2\nj\0\0\4\0\6\0\t6\0\0\0'\2\1\0B\0\2\0029\0\2\0005\2\3\0005\3\4\0=\3\5\2B\0\2\1K\0\1\0\ffilters\1\0\1\rdotfiles\2\1\0\1\18open_on_setup\2\nsetup\14nvim-tree\frequire\0", "config", "nvim-tree.lua")
+try_loadstring("\27LJ\2\nÿ\1\0\1\6\0\14\1*9\1\0\0\a\1\1\0X\1\a€6\1\2\0009\1\3\0019\2\4\0008\1\2\0019\1\5\1\6\1\1\0X\1\2€+\1\1\0X\2\1€+\1\2\0006\2\2\0009\2\6\0029\2\a\0029\4\0\0B\2\2\2\b\2\0\0X\2\2€+\2\1\0X\3\1€+\2\2\0\14\0\1\0X\3\3€\14\0\2\0X\3\1€K\0\1\0\15\0\2\0X\3\5€6\3\2\0009\3\b\0039\3\t\0039\5\0\0B\3\2\0016\3\n\0'\5\v\0B\3\2\0029\3\f\0039\3\r\3B\3\1\1K\0\1\0\topen\ttree\18nvim-tree.api\frequire\acd\bcmd\16isdirectory\afn\fbuftype\bbuf\abo\bvim\5\tfile\2±\1\1\0\5\0\r\0\0176\0\0\0'\2\1\0B\0\2\0029\0\2\0005\2\4\0005\3\3\0=\3\5\2B\0\2\0016\0\6\0009\0\a\0009\0\b\0005\2\t\0005\3\v\0003\4\n\0=\4\f\3B\0\3\1K\0\1\0\rcallback\1\0\0\0\1\2\0\0\rVimEnter\24nvim_create_autocmd\bapi\bvim\ffilters\1\0\0\1\0\1\rdotfiles\2\nsetup\14nvim-tree\frequire\0", "config", "nvim-tree.lua")
 time([[Config for nvim-tree.lua]], false)
--- Config for: killersheep.nvim
-time([[Config for killersheep.nvim]], true)
-try_loadstring("\27LJ\2\nw\0\0\4\0\6\0\t6\0\0\0'\2\1\0B\0\2\0029\0\2\0005\2\4\0005\3\3\0=\3\5\2B\0\2\1K\0\1\0\fkeymaps\1\0\0\1\0\2\14move_left\v<Left>\15move_right\f<Right>\nsetup\16killersheep\frequire\0", "config", "killersheep.nvim")
-time([[Config for killersheep.nvim]], false)
--- Config for: trouble.nvim
-time([[Config for trouble.nvim]], true)
-try_loadstring("\27LJ\2\n5\0\0\3\0\3\0\0066\0\0\0'\2\1\0B\0\2\0029\0\2\0B\0\1\1K\0\1\0\nsetup\ftrouble\frequire\0", "config", "trouble.nvim")
-time([[Config for trouble.nvim]], false)
--- Config for: bufferline.nvim
-time([[Config for bufferline.nvim]], true)
-try_loadstring("\27LJ\2\n8\0\0\3\0\3\0\0066\0\0\0'\2\1\0B\0\2\0029\0\2\0B\0\1\1K\0\1\0\nsetup\15bufferline\frequire\0", "config", "bufferline.nvim")
-time([[Config for bufferline.nvim]], false)
 -- Config for: nvim-autopairs
 time([[Config for nvim-autopairs]], true)
 try_loadstring("\27LJ\2\n<\0\0\3\0\3\0\0066\0\0\0'\2\1\0B\0\2\0029\0\2\0B\0\1\1K\0\1\0\nsetup\19nvim-autopairs\frequire\0", "config", "nvim-autopairs")
 time([[Config for nvim-autopairs]], false)
--- Config for: kommentary
-time([[Config for kommentary]], true)
-try_loadstring("\27LJ\2\n|\0\0\4\0\5\0\b6\0\0\0'\2\1\0B\0\2\0029\0\2\0'\2\3\0005\3\4\0B\0\3\1K\0\1\0\1\0\1 prefer_single_line_comments\2\fdefault\23configure_language\22kommentary.config\frequire\0", "config", "kommentary")
-time([[Config for kommentary]], false)
--- Config for: vimpeccable
-time([[Config for vimpeccable]], true)
-try_loadstring("\27LJ\2\n$\0\0\3\0\2\0\0046\0\0\0'\2\1\0B\0\2\1K\0\1\0\tkeys\frequire\0", "config", "vimpeccable")
-time([[Config for vimpeccable]], false)
--- Config for: null-ls.nvim
-time([[Config for null-ls.nvim]], true)
-try_loadstring("\27LJ\2\n»\1\0\0\6\0\f\0\0216\0\0\0'\2\1\0B\0\2\0029\1\2\0005\3\n\0004\4\4\0009\5\3\0009\5\4\0059\5\5\5>\5\1\0049\5\3\0009\5\6\0059\5\a\5>\5\2\0049\5\3\0009\5\b\0059\5\t\5>\5\3\4=\4\v\3B\1\2\1K\0\1\0\fsources\1\0\0\nspell\15completion\veslint\16diagnostics\vstylua\15formatting\rbuiltins\nsetup\fnull-ls\frequire\0", "config", "null-ls.nvim")
-time([[Config for null-ls.nvim]], false)
+-- Config for: lualine.nvim
+time([[Config for lualine.nvim]], true)
+try_loadstring("\27LJ\2\nÆ\1\0\0\5\0\n\0\r6\0\0\0'\2\1\0B\0\2\0029\0\2\0005\2\b\0005\3\3\0005\4\4\0=\4\5\0035\4\6\0=\4\a\3=\3\t\2B\0\2\1K\0\1\0\foptions\1\0\0\23section_separators\1\0\2\tleft\5\nright\5\25component_separators\1\0\2\tleft\6|\nright\6|\1\0\2\17globalstatus\2\ntheme\rcodedark\nsetup\flualine\frequire\0", "config", "lualine.nvim")
+time([[Config for lualine.nvim]], false)
+-- Config for: trouble.nvim
+time([[Config for trouble.nvim]], true)
+try_loadstring("\27LJ\2\n5\0\0\3\0\3\0\0066\0\0\0'\2\1\0B\0\2\0029\0\2\0B\0\1\1K\0\1\0\nsetup\ftrouble\frequire\0", "config", "trouble.nvim")
+time([[Config for trouble.nvim]], false)
+-- Config for: rust-tools.nvim
+time([[Config for rust-tools.nvim]], true)
+try_loadstring("\27LJ\2\n¡\2\0\0\a\0\18\0\0216\0\0\0'\2\1\0B\0\2\0029\0\2\0005\2\b\0005\3\4\0005\4\3\0=\4\5\0035\4\6\0=\4\a\3=\3\t\0025\3\15\0005\4\r\0005\5\v\0005\6\n\0=\6\f\5=\5\14\4=\4\16\3=\3\17\2B\0\2\1K\0\1\0\vserver\rsettings\1\0\0\18rust-analyzer\1\0\0\16checkOnSave\1\0\0\1\0\1\fcommand\vclippy\ntools\1\0\0\16inlay_hints\1\0\3\tauto\2\14highlight\15Identifier\25show_parameter_hints\1\14runnables\1\0\0\1\0\1\18use_telescope\2\nsetup\15rust-tools\frequire\0", "config", "rust-tools.nvim")
+time([[Config for rust-tools.nvim]], false)
+-- Config for: lsp-zero.nvim
+time([[Config for lsp-zero.nvim]], true)
+try_loadstring("\27LJ\2\nf\0\0\4\0\6\0\f6\0\0\0'\2\1\0B\0\2\0029\1\2\0'\3\3\0B\1\2\0019\1\4\0B\1\1\0016\1\0\0'\3\5\0B\1\2\1K\0\1\0\tvars\nsetup\16recommended\vpreset\rlsp-zero\frequire\0", "config", "lsp-zero.nvim")
+time([[Config for lsp-zero.nvim]], false)
 
 _G._packer.inside_compile = false
 if _G._packer.needs_bufread == true then

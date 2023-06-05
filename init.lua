@@ -6,10 +6,10 @@ if fn.empty(fn.glob(install_path)) > 0 then
 end
 
 require("packer").startup(function(use)
-    use "wbthomason/packer.nvim" -- Package manager
+    use "wbthomason/packer.nvim"       -- Package manager
     use "kyazdani42/nvim-web-devicons" -- https://github.com/kyazdani42/nvim-web-devicons
     use {
-        'VonHeikemen/lsp-zero.nvim', -- LSP https://github.com/VonHeikemen/lsp-zero.nvim
+        'VonHeikemen/lsp-zero.nvim',   -- LSP https://github.com/VonHeikemen/lsp-zero.nvim
         requires = {
             -- LSP Support
             { 'neovim/nvim-lspconfig' },
@@ -49,7 +49,7 @@ require("packer").startup(function(use)
             null_ls.setup {
                 sources = {
                     null_ls.builtins.formatting.stylua,
-                    -- null_ls.builtins.formatting.autpep8,
+                    null_ls.builtins.formatting.black,
                     null_ls.builtins.diagnostics.eslint,
                     null_ls.builtins.completion.spell,
                 },
@@ -71,7 +71,30 @@ require("packer").startup(function(use)
     }
     use {
         "kyazdani42/nvim-tree.lua", -- https://github.com/kyazdani42/nvim-tree.lua/blob/master/doc/nvim-tree-lua.txt
-        config = function() require("nvim-tree").setup { open_on_setup = true, filters = { dotfiles = true } } end
+        config = function()
+            require("nvim-tree").setup { filters = { dotfiles = true } }
+
+            vim.api.nvim_create_autocmd({ "VimEnter" }, {
+                callback = function(data)
+                    -- buffer is a [No Name]
+                    local no_name = data.file == "" and vim.bo[data.buf].buftype == ""
+
+                    -- buffer is a directory
+                    local directory = vim.fn.isdirectory(data.file) == 1
+
+                    if not no_name and not directory then
+                        return
+                    end
+
+                    -- change to the directory
+                    if directory then
+                        vim.cmd.cd(data.file)
+                    end
+                    -- open the tree
+                    require("nvim-tree.api").tree.open()
+                end
+            })
+        end
     }
     use {
         "folke/trouble.nvim", -- https://github.com/folke/trouble.nvim
@@ -92,7 +115,8 @@ require("packer").startup(function(use)
     }
     use {
         "b3nj5m1n/kommentary", -- https://github.com/b3nj5m1n/kommentary
-        config = function() require("kommentary.config").configure_language("default",
+        config = function()
+            require("kommentary.config").configure_language("default",
                 { prefer_single_line_comments = true })
         end
     }
@@ -127,20 +151,20 @@ require("packer").startup(function(use)
         end
     }
 
-    use "Yggdroot/indentLine" -- Tab lines https://github.com/Yggdroot/indentLine
-    use "xiyaowong/nvim-transparent" -- https://github.com/xiyaowong/nvim-transparent
+    use "lukas-reineke/indent-blankline.nvim" -- Tab lines https://github.com/lukas-reineke/indent-blankline.nvim
+    use "xiyaowong/nvim-transparent"          -- https://github.com/xiyaowong/nvim-transparent
 
     -- themes
     use "rafi/awesome-vim-colorschemes" -- https://github.com/rafi/awesome-vim-colorschemes
-    use "morhetz/gruvbox" -- https://github.com/morhetz/gruvbox
-    use 'Mofiqul/vscode.nvim' -- https://github.com/Mofiqul/vscode.nvim
+    use "morhetz/gruvbox"               -- https://github.com/morhetz/gruvbox
+    use 'Mofiqul/vscode.nvim'           -- https://github.com/Mofiqul/vscode.nvim
 
     -- games
     use {
         "seandewar/killersheep.nvim", -- :KillKillKill https://github.com/seandewar/killersheep.nvim
         config = function() require("killersheep").setup { keymaps = { move_left = "<Left>", move_right = "<Right>" } } end
     }
-    use "alec-gibson/nvim-tetris" -- https://github.com/alec-gibson/nvim-tetris
+    use "alec-gibson/nvim-tetris"  -- https://github.com/alec-gibson/nvim-tetris
     use "ThePrimeagen/vim-be-good" -- https://github.com/ThePrimeagen/vim-be-good
 
     -- Automatically vim.opt.up your coBnfiguration after cloning packer.nvim
