@@ -18,4 +18,4 @@ vim.opt.cindent=true
 vim.cmd"colorscheme vscode"
 vim.opt.linebreak=true
 vim.opt.termguicolors=true
-
+vim.opt.shell="/bin/zsh"

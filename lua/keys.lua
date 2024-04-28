@@ -5,10 +5,12 @@ vimp.nmap('<A-Right>', ':bn<Enter>')
 vimp.imap('<A-Right>', '<C-o>:bn<Enter>')
 vimp.nmap('<A-Left>', ':bp<Enter>')
 vimp.imap('<A-Left>', '<C-o>:bp<Enter>')
-vimp.nmap('<A-Up>', '<C-w><Up>')
-vimp.imap('<A-Up>', '<Ecs><C-w><Up>i')
-vimp.nmap('<A-Down>', '<C-w><Down>')
-vimp.imap('<A-Down>', '<Ecs><C-w><Down>i')
+
+-- move line
+vimp.nmap('<A-Up>', ':m-2<Enter>')
+vimp.imap('<A-Up>', '<Esc>:m-2<Enter>i')
+vimp.nmap('<A-Down>', ':m+1<Enter>')
+vimp.imap('<A-Down>', '<Esc>:m+1<Enter>i')
 
 -- Delete
 vimp.vmap('<Backspace>', 'di')

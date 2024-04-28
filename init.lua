@@ -29,33 +29,50 @@ require("packer").startup(function(use)
             { 'rafamadriz/friendly-snippets' },
         },
         config = function()
-            local lsp = require('lsp-zero')
-            lsp.preset('recommended')
+            local lsp_zero = require('lsp-zero')
+
+            lsp_zero.on_attach(function(client, bufnr)
+                -- see :help lsp-zero-keybindings
+                -- to learn the available actions
+                lsp_zero.default_keymaps({ buffer = bufnr })
+            end)
+
+            require('mason').setup({})
+            require('mason-lspconfig').setup({
+                handlers = {
+                    function(server_name)
+                        require('lspconfig')[server_name].setup({})
+                    end,
+                },
+            })
+
+            -- lsp.preset('recommended')
 
             -- local rust_lsp = lsp.build_options('rust_analyzer', {})
 
-            lsp.setup()
+            -- lsp.setup()
 
             -- require('rust-tools').setup({server = rust_lsp})
 
             require("vars")
+
+            require("lspconfig").biome.setup({})
         end
     }
-    use {
-        "jose-elias-alvarez/null-ls.nvim", -- https://github.com/jose-elias-alvarez/null-ls.nvim
-        requires = { "nvim-lua/plenary.nvim" },
-        config = function()
-            local null_ls = require("null-ls")
-            null_ls.setup {
-                sources = {
-                    null_ls.builtins.formatting.stylua,
-                    null_ls.builtins.formatting.black,
-                    null_ls.builtins.diagnostics.eslint,
-                    null_ls.builtins.completion.spell,
-                },
-            }
-        end
-    }
+    -- use {
+    --     "jose-elias-alvarez/null-ls.nvim", -- https://github.com/jose-elias-alvarez/null-ls.nvim
+    --     requires = { "nvim-lua/plenary.nvim" },
+    --     config = function()
+    --         local null_ls = require("null-ls")
+    --         null_ls.setup {
+    --             sources = {
+    --                 null_ls.builtins.formatting.stylua,
+    --                 null_ls.builtins.formatting.black,
+    --                 null_ls.builtins.completion.spell,
+    --             },
+    --         }
+    --     end
+    -- }
     use {
         "nvim-lualine/lualine.nvim", -- https://github.com/nvim-lualine/lualine.nvim
         config = function()
