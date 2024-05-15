@@ -1,10 +1,11 @@
 local vimp = require('vimp')
 
+-- goto definition
+-- <C-w> }
+
 -- Buffers navigation
-vimp.nmap('<A-Right>', ':bn<Enter>')
-vimp.imap('<A-Right>', '<C-o>:bn<Enter>')
-vimp.nmap('<A-Left>', ':bp<Enter>')
-vimp.imap('<A-Left>', '<C-o>:bp<Enter>')
+vimp.nmap('>', ':bn<Enter>')
+vimp.nmap('<', ':bp<Enter>')
 
 -- move line
 vimp.nmap('<A-Up>', ':m-2<Enter>')
@@ -16,19 +17,10 @@ vimp.imap('<A-Down>', '<Esc>:m+1<Enter>i')
 vimp.vmap('<Backspace>', 'di')
 
 -- Undo and redo
-vimp.nmap('<C-z>', ':u<Enter>')
+vimp.nmap('<C-z>', ':u<Enter>') -- u
 vimp.imap('<C-z>', '<C-o>:u<Enter>')
-vimp.nmap('<C-y>', ':red<Enter>')
+vimp.nmap('<C-y>', ':red<Enter>') -- <C-r>
 vimp.imap('<C-y>', '<C-o>:red<Enter>')
-
--- Terminal
-vimp.nmap("<C-j>", ":ToggleTerm<Enter>")
-vimp.imap("<C-j>", "<C-o>:ToggleTerm<Enter>")
-vimp.tnoremap("<Esc>", "<C-\\><C-n>")
-vimp.tnoremap("<C-j>", "<C-\\><C-n>:ToggleTerm<Enter>")
-
--- Trouble Toggle
-vimp.nmap("<C-k>", ":TroubleToggle<CR>")
 
 -- Save and close
 vimp.nmap("<C-s>", ":w<CR>")
@@ -43,17 +35,6 @@ vimp.vmap("<C-c>", "y<Esc>i")
 vimp.vmap("<C-x>", "d<Esc>i")
 vimp.nmap("<C-v>", "p")
 vimp.imap("<C-v>", "<Esc>pi<Right>")
-
--- Control tree
-vimp.nmap({'silent'}, "<C-b>", ":NvimTreeToggle<Enter>")
-vimp.vmap({'silent'}, "<C-b>", ":NvimTreeToggle<Enter>")
-vimp.imap({'silent'}, "<C-b>", "<Esc>:NvimTreeToggle<Enter>")
-vimp.nmap({'silent'}, "<S-b>", ":NvimTreeFocus<Enter>")
-
--- Comment
-vimp.nmap({'silent'}, "<C-_>", "<Plug>kommentary_line_default")
-vimp.imap({'silent'}, "<C-_>", "<C-o><Plug>kommentary_line_default")
-vimp.xmap({'silent'}, "<C-_>", "<Plug>kommentary_visual_default<C-c>")
 
 -- Lines selection
 vimp.nmap("<S-Up>",    "v<Up>")
@@ -82,16 +63,4 @@ vimp.nnoremap("<M-CR>", ":lua vim.lsp.buf.code_action()<CR>")
 
 -- Format
 vimp.nmap("<C-f>", ":lua vim.lsp.buf.format()<CR>")
-
-
--- Arguments: mode (optional)
-vimp.map_command("ShowAllMaps", function(...)
-  -- Use empty string as prefix to select all
-  vimp.show_maps('', ...)
-end)
-
--- Arguments: prefix (required), mode (optional)
-vimp.map_command("ShowMaps", function(...)
-  vimp.show_maps(...)
-end)
 

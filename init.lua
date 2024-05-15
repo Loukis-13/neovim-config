@@ -6,8 +6,51 @@ if not (vim.uv or vim.loop).fs_stat(lazypath) then
 end
 vim.opt.rtp:prepend(lazypath)
 
+-- https://github.com/folke/lazy.nvim
 require("lazy").setup({
+    {
+        "svermeulen/vimpeccable", -- maps, commands https://github.com/svermeulen/vimpeccable
+        config = function() require("keys") end
+    },
+    {
+        'nvim-treesitter/nvim-treesitter', -- https://github.com/nvim-treesitter/nvim-treesitter
+        build = ":TSUpdate"
+    },
     { "nvim-tree/nvim-web-devicons" }, -- https://github.com/nvim-tree/nvim-web-devicons
+    { 'neovim/nvim-lspconfig' },
+    { 'hrsh7th/cmp-nvim-lsp' },
+    { 'L3MON4D3/LuaSnip' },
+    {
+        'hrsh7th/nvim-cmp', -- https://github.com/hrsh7th/nvim-cmp
+        config = function()
+            local cmp = require("cmp")
+
+            cmp.setup({
+                mapping = cmp.mapping.preset.insert({
+                    ['<C-b>'] = cmp.mapping.scroll_docs(-4),
+                    ['<C-f>'] = cmp.mapping.scroll_docs(4),
+                    ['<C-Space>'] = cmp.mapping.complete(),
+                    ['<C-e>'] = cmp.mapping.abort(),
+                    ['<CR>'] = cmp.mapping.confirm({ select = true }),
+                })
+            })
+        end
+    },
+    {
+        'VonHeikemen/lsp-zero.nvim', -- LSP https://github.com/VonHeikemen/lsp-zero.nvim
+        branch = 'v3.x',
+        config = function()
+            local lsp_zero = require('lsp-zero')
+
+            lsp_zero.extend_lspconfig()
+
+            lsp_zero.on_attach(function(client, bufnr)
+                -- see :help lsp-zero-keybindings
+                -- to learn the available actions
+                lsp_zero.default_keymaps({ buffer = bufnr })
+            end)
+        end
+    },
     {
         'williamboman/mason.nvim',
         dependencies = 'VonHeikemen/lsp-zero.nvim',
@@ -24,24 +67,53 @@ require("lazy").setup({
                     end,
                 },
             })
-        end
+        end,
     },
-    { 'neovim/nvim-lspconfig' },
-    { 'hrsh7th/cmp-nvim-lsp' },
-    { 'hrsh7th/nvim-cmp' },
-    { 'L3MON4D3/LuaSnip' },
     {
-        'VonHeikemen/lsp-zero.nvim', -- LSP https://github.com/VonHeikemen/lsp-zero.nvim
-        branch = 'v3.x',
-        config = function()
-            local lsp_zero = require('lsp-zero')
+        "folke/trouble.nvim", -- https://github.com/folke/trouble.nvim
+        config = function() require("trouble").setup() end,
+        keys = { { "<C-k>", "<cmd>TroubleToggle<CR>" } }
+    },
+    {
+        "windwp/nvim-autopairs", -- https://github.com/windwp/nvim-autopairs
+        config = function() require("nvim-autopairs").setup() end
+    },
+    {
+        'numToStr/Comment.nvim', -- https://github.com/numToStr/Comment.nvim
+        opts = {
+            toggler = {
+                line = '<C-/>'
+            },
+            opleader = {
+                line = '<C-/>',
+            },
+        },
+        lazy = false,
+    },
+    {
+        'nvim-telescope/telescope.nvim', -- https://github.com/nvim-telescope/telescope.nvim
+        tag = '0.1.6',
+        dependencies = { 'nvim-lua/plenary.nvim', 'BurntSushi/ripgrep' },
+        keys = { { "F", "<cmd>Telescope live_grep<CR>" } }
+    },
+    {
+        "julienvincent/nvim-paredit", -- https://github.com/julienvincent/nvim-paredit
+        config = function() require("nvim-paredit").setup() end
+    },
+    {
+        'Olical/conjure' -- https://github.com/Olical/conjure
+    },
 
-            lsp_zero.on_attach(function(client, bufnr)
-                -- see :help lsp-zero-keybindings
-                -- to learn the available actions
-                lsp_zero.default_keymaps({ buffer = bufnr })
-            end)
-        end
+    -- stylization
+    {
+        "akinsho/bufferline.nvim", -- https://github.com/akinsho/bufferline.nvim
+        version = "*",
+        dependencies = 'nvim-tree/nvim-web-devicons',
+        config = function() require("bufferline").setup() end
+    },
+    {
+        "lewis6991/gitsigns.nvim", -- https://github.com/lewis6991/gitsigns.nvim
+        config = function() require('gitsigns').setup() end
     },
     {
         "nvim-lualine/lualine.nvim", -- https://github.com/nvim-lualine/lualine.nvim
@@ -81,46 +153,24 @@ require("lazy").setup({
                     require("nvim-tree.api").tree.open()
                 end
             })
-        end
-    },
-    {
-        "folke/trouble.nvim", -- https://github.com/folke/trouble.nvim
-        config = function() require("trouble").setup() end
-    },
-    {
-        "windwp/nvim-autopairs", -- https://github.com/windwp/nvim-autopairs
-        config = function() require("nvim-autopairs").setup() end
+        end,
+        keys = {
+            { "<C-b>", "<cmd>NvimTreeToggle<Enter>", mode = { "n", "i", "v" }, silent = true },
+        }
     },
     {
         "akinsho/toggleterm.nvim", -- https://github.com/akinsho/toggleterm.nvim
-        config = function() require("toggleterm").setup({ shell = "/bin/zsh" }) end
+        config = function() require("toggleterm").setup({ shell = "/bin/zsh" }) end,
+        keys = {
+            { "<C-j>", "<cmd>ToggleTerm<Enter>", mode = { "n", "i", "t" }, silent = true },
+            { "<Esc>", "<C-\\><C-n>",            mode = "t",               silent = true }
+        }
     },
-    {
-        "akinsho/bufferline.nvim", -- https://github.com/akinsho/bufferline.nvim
-        version = "*",
-        dependencies = 'nvim-tree/nvim-web-devicons',
-        config = function() require("bufferline").setup() end
-    },
-    {
-        "b3nj5m1n/kommentary", -- https://github.com/b3nj5m1n/kommentary
-        config = function()
-            require("kommentary.config").configure_language(
-                "default",
-                { prefer_single_line_comments = true }
-            )
-        end
-    },
-    {
-        "svermeulen/vimpeccable", -- maps, commands https://github.com/svermeulen/vimpeccable
-        config = function() require("keys") end
-    },
-
-    { "lukas-reineke/indent-blankline.nvim" }, -- Tab lines https://github.com/lukas-reineke/indent-blankline.nvim
-    { "xiyaowong/nvim-transparent" },          -- https://github.com/xiyaowong/nvim-transparent
 
     -- themes
-    { "morhetz/gruvbox" },     -- https://github.com/morhetz/gruvbox
-    { 'Mofiqul/vscode.nvim' }, -- https://github.com/Mofiqul/vscode.nvim
+    { "morhetz/gruvbox" },            -- https://github.com/morhetz/gruvbox
+    { 'Mofiqul/vscode.nvim' },        -- https://github.com/Mofiqul/vscode.nvim
+    { "xiyaowong/nvim-transparent" }, -- https://github.com/xiyaowong/nvim-transparent
 
     -- games
     {
@@ -131,5 +181,4 @@ require("lazy").setup({
     { "ThePrimeagen/vim-be-good" } -- https://github.com/ThePrimeagen/vim-be-good
 })
 
-require("vars")
 require("opts")
