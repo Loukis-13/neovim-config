@@ -4,8 +4,8 @@ local vimp = require('vimp')
 -- <C-w> }
 
 -- Buffers navigation
-vimp.nmap('>', ':bn<Enter>')
-vimp.nmap('<', ':bp<Enter>')
+vimp.nnoremap('>', ':bn<Enter>')
+vimp.nnoremap('<', ':bp<Enter>')
 
 -- move line
 vimp.nmap('<A-Up>', ':m-2<Enter>')

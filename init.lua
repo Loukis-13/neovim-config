@@ -74,10 +74,14 @@ require("lazy").setup({
         config = function() require("trouble").setup() end,
         keys = { { "<C-k>", "<cmd>TroubleToggle<CR>" } }
     },
-    {
-        "windwp/nvim-autopairs", -- https://github.com/windwp/nvim-autopairs
-        config = function() require("nvim-autopairs").setup() end
-    },
+    -- {
+    --     "windwp/nvim-autopairs", -- https://github.com/windwp/nvim-autopairs
+    --     config = function()
+    --         require("nvim-autopairs").setup({
+    --             ignored_next_char = ""
+    --         })
+    --     end
+    -- },
     {
         'numToStr/Comment.nvim', -- https://github.com/numToStr/Comment.nvim
         opts = {
@@ -98,7 +102,20 @@ require("lazy").setup({
     },
     {
         "julienvincent/nvim-paredit", -- https://github.com/julienvincent/nvim-paredit
-        config = function() require("nvim-paredit").setup() end
+        config = function()
+            require("nvim-paredit").setup({
+                keys = {
+                    [">("] = false,
+                    [">)"] = false,
+                    [">e"] = false,
+                    [">f"] = false,
+                    ["<("] = false,
+                    ["<)"] = false,
+                    ["<e"] = false,
+                    ["<f"] = false,
+                }
+            })
+        end
     },
     {
         'Olical/conjure' -- https://github.com/Olical/conjure
@@ -130,6 +147,7 @@ require("lazy").setup({
     },
     {
         "nvim-tree/nvim-tree.lua", -- https://github.com/nvim-tree/nvim-tree.lua/blob/master/doc/nvim-tree-lua.txt
+        lazy = false,
         config = function()
             require("nvim-tree").setup { filters = { dotfiles = true } }
 
