@@ -19,6 +19,7 @@ vim.cmd "colorscheme vscode"
 vim.opt.linebreak = true
 vim.opt.termguicolors = true
 vim.opt.shell = "/bin/zsh"
+vim.opt.splitright = true
 
 vim.diagnostic.config {
     virtual_text = {

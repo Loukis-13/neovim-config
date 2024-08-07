@@ -25,8 +25,8 @@ vimp.imap('<C-y>', '<C-o>:red<Enter>')
 -- Save and close
 vimp.nmap("<C-s>", ":w<CR>")
 vimp.imap("<C-s>", "<C-o>:w<CR>")
-vimp.nmap("<C-q>", ":wq<CR>")
-vimp.imap("<C-q>", "<Esc>:wq<CR>")
+-- vimp.nmap("<C-q>", ":wq<CR>")
+-- vimp.imap("<C-q>", "<Esc>:wq<CR>")
 vimp.nmap("qq", ":if (len(getbufinfo({'buflisted':1}))>1) <bar>exe 'bd'<bar> else <bar>exe 'q'<bar> endif <Enter>")
 vimp.imap("qq", "<Esc>:if (len(getbufinfo({'buflisted':1}))>1) <bar>exe 'bd'<bar> else <bar>exe 'q'<bar> endif <Enter>")
 
@@ -59,8 +59,12 @@ vimp.vmap("<Tab>", ">gv")
 vimp.vmap("<S-Tab>", "<gv")
 
 -- QuickFix
-vimp.nnoremap("<M-CR>", ":lua vim.lsp.buf.code_action()<CR>")
+vimp.nnoremap("<C-.>", ":lua vim.lsp.buf.code_action()<CR>")
 
 -- Format
 vimp.nmap("<C-f>", ":lua vim.lsp.buf.format()<CR>")
+
+-- Move with Meta key
+vimp.map("<M-Right>", "e")
+vimp.map("<M-Left>", "b")
 

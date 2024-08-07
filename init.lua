@@ -6,6 +6,9 @@ if not (vim.uv or vim.loop).fs_stat(lazypath) then
 end
 vim.opt.rtp:prepend(lazypath)
 
+-- vim.g["conjure#log#wrap"] = true
+vim.g["conjure#client#clojure#nrepl#test#current_form_names"] = { "deftest", "defflow" }
+
 -- https://github.com/folke/lazy.nvim
 require("lazy").setup({
     {
@@ -14,7 +17,13 @@ require("lazy").setup({
     },
     {
         'nvim-treesitter/nvim-treesitter', -- https://github.com/nvim-treesitter/nvim-treesitter
-        build = ":TSUpdate"
+        build = ":TSUpdate",
+        config = function()
+            require("nvim-treesitter.configs").setup {
+                highlight = { enable = true },
+                ensure_installed = { "vimdoc", "luadoc", "vim", "lua", "markdown" }
+            }
+        end
     },
     { "nvim-tree/nvim-web-devicons" }, -- https://github.com/nvim-tree/nvim-web-devicons
     { 'neovim/nvim-lspconfig' },
@@ -74,14 +83,14 @@ require("lazy").setup({
         config = function() require("trouble").setup() end,
         keys = { { "<C-k>", "<cmd>TroubleToggle<CR>" } }
     },
-    -- {
-    --     "windwp/nvim-autopairs", -- https://github.com/windwp/nvim-autopairs
-    --     config = function()
-    --         require("nvim-autopairs").setup({
-    --             ignored_next_char = ""
-    --         })
-    --     end
-    -- },
+    {
+        "windwp/nvim-autopairs", -- https://github.com/windwp/nvim-autopairs
+        config = function()
+            require("nvim-autopairs").setup({
+                ignored_next_char = ""
+            })
+        end
+    },
     {
         'numToStr/Comment.nvim', -- https://github.com/numToStr/Comment.nvim
         opts = {
@@ -98,13 +107,50 @@ require("lazy").setup({
         'nvim-telescope/telescope.nvim', -- https://github.com/nvim-telescope/telescope.nvim
         tag = '0.1.6',
         dependencies = { 'nvim-lua/plenary.nvim', 'BurntSushi/ripgrep' },
-        keys = { { "F", "<cmd>Telescope live_grep<CR>" } }
+        keys = {
+            { "F", "<cmd>Telescope live_grep<CR>" },
+            { "G", "<cmd>Telescope git_status<CR>" }
+        }
     },
     {
         "julienvincent/nvim-paredit", -- https://github.com/julienvincent/nvim-paredit
         config = function()
-            require("nvim-paredit").setup({
+            local paredit = require("nvim-paredit")
+
+
+            paredit.setup({
+                use_default_keys = false,
                 keys = {
+                    ["<localleader>@"] = { paredit.unwrap.unwrap_form_under_cursor, "Splice sexp" },
+                    ["<localleader>o"] = { paredit.unwrap.unwrap_form_under_cursor, "Splice sexp" },
+                    ["<C-M-P><C-M-R>"] = {
+                        paredit.unwrap.unwrap_form_under_cursor,
+                        "Splice sexp",
+                        mode = { "n", "x", "o", "v" },
+                    },
+                    ["<M-Right>"] = {
+                        paredit.api.move_to_next_element_tail,
+                        "Jump to next element tail",
+                        repeatable = false,
+                        mode = { "n", "i", "x", "o", "v" },
+                    },
+                    ["<M-Left>"] = {
+                        paredit.api.move_to_prev_element_head,
+                        "Jump to previous element head",
+                        repeatable = false,
+                        mode = { "n", "i", "x", "o", "v" },
+                    },
+                    ["<M-Up>"] = {
+                        paredit.api.drag_element_backwards,
+                        "Slurp forwards",
+                        mode = { "n", "x", "o", "v" },
+                    },
+                    ["<M-Down>"] = {
+                        paredit.api.drag_element_forwards,
+                        "Barf backwards",
+                        mode = { "n", "x", "o", "v" },
+                    },
+
                     [">("] = false,
                     [">)"] = false,
                     [">e"] = false,
