@@ -26,62 +26,103 @@ require("lazy").setup({
         end
     },
     { "nvim-tree/nvim-web-devicons" }, -- https://github.com/nvim-tree/nvim-web-devicons
-    { 'neovim/nvim-lspconfig' },
-    { 'hrsh7th/cmp-nvim-lsp' },
-    { 'L3MON4D3/LuaSnip' },
-    {
-        'hrsh7th/nvim-cmp', -- https://github.com/hrsh7th/nvim-cmp
-        config = function()
-            local cmp = require("cmp")
-
-            cmp.setup({
-                mapping = cmp.mapping.preset.insert({
-                    ['<C-b>'] = cmp.mapping.scroll_docs(-4),
-                    ['<C-f>'] = cmp.mapping.scroll_docs(4),
-                    ['<C-Space>'] = cmp.mapping.complete(),
-                    ['<C-e>'] = cmp.mapping.abort(),
-                    ['<CR>'] = cmp.mapping.confirm({ select = true }),
-                })
-            })
-        end
-    },
-    {
-        'VonHeikemen/lsp-zero.nvim', -- LSP https://github.com/VonHeikemen/lsp-zero.nvim
-        branch = 'v3.x',
-        config = function()
-            local lsp_zero = require('lsp-zero')
-
-            lsp_zero.extend_lspconfig()
-
-            lsp_zero.on_attach(function(client, bufnr)
-                -- see :help lsp-zero-keybindings
-                -- to learn the available actions
-                lsp_zero.default_keymaps({ buffer = bufnr })
-            end)
-        end
-    },
     {
         'williamboman/mason.nvim',
-        dependencies = 'VonHeikemen/lsp-zero.nvim',
-        config = function() require('mason').setup({}) end
+        lazy = false,
+        opts = {},
     },
+
+    -- Autocompletion
     {
-        'williamboman/mason-lspconfig.nvim',
-        dependencies = 'williamboman/mason.nvim',
+        'hrsh7th/nvim-cmp', -- https://github.com/hrsh7th/nvim-cmp
+        event = 'InsertEnter',
         config = function()
-            require('mason-lspconfig').setup({
-                handlers = {
-                    function(server_name)
-                        require('lspconfig')[server_name].setup({})
+            local cmp = require('cmp')
+
+            cmp.setup({
+sources = {
+                    { name = 'nvim_lsp' },
+                },
+                mapping = cmp.mapping.preset.insert({
+                    ['<C-Space>'] = cmp.mapping.complete(),
+                    ['<C-u>'] = cmp.mapping.scroll_docs(-4),
+                    ['<C-d>'] = cmp.mapping.scroll_docs(4),
+                    ['<C-e>'] = cmp.mapping.abort(),
+                    ['<CR>'] = cmp.mapping.confirm({ select = true }),
+                }),
+                snippet = {
+                    expand = function(args)
+                        vim.snippet.expand(args.body)
                     end,
                 },
             })
+        end
+    },
+
+    -- LSP
+    {
+        'neovim/nvim-lspconfig', -- https://github.com/neovim/nvim-lspconfig
+        cmd = { 'LspInfo', 'LspInstall', 'LspStart' },
+        event = { 'BufReadPre', 'BufNewFile' },
+        dependencies = {
+            { 'hrsh7th/cmp-nvim-lsp' },
+            { 'williamboman/mason.nvim' },
+            { 'williamboman/mason-lspconfig.nvim' },
+        },
+        init = function()
+            -- Reserve a space in the gutter
+            -- This will avoid an annoying layout shift in the screen
+            vim.opt.signcolumn = 'yes'
         end,
+        config = function()
+            local lsp_defaults = require('lspconfig').util.default_config
+
+            -- Add cmp_nvim_lsp capabilities settings to lspconfig
+            -- This should be executed before you configure any language server
+            lsp_defaults.capabilities = vim.tbl_deep_extend(
+                'force',
+                lsp_defaults.capabilities,
+                require('cmp_nvim_lsp').default_capabilities()
+            )
+
+            -- LspAttach is where you enable features that only work
+            -- if there is a language server active in the file
+            vim.api.nvim_create_autocmd('LspAttach', {
+                desc = 'LSP actions',
+                callback = function(event)
+                    local opts = { buffer = event.buf }
+
+                    vim.keymap.set('n', 'K', '<cmd>lua vim.lsp.buf.hover()<cr>', opts)
+                    vim.keymap.set('n', 'gd', '<cmd>lua vim.lsp.buf.definition()<cr>', opts)
+                    vim.keymap.set('n', 'gD', '<cmd>lua vim.lsp.buf.declaration()<cr>', opts)
+                    vim.keymap.set('n', 'gi', '<cmd>lua vim.lsp.buf.implementation()<cr>', opts)
+                    vim.keymap.set('n', 'go', '<cmd>lua vim.lsp.buf.type_definition()<cr>', opts)
+                    vim.keymap.set('n', 'gr', '<cmd>lua vim.lsp.buf.references()<cr>', opts)
+                    vim.keymap.set('n', 'gs', '<cmd>lua vim.lsp.buf.signature_help()<cr>', opts)
+                    vim.keymap.set('n', '<F2>', '<cmd>lua vim.lsp.buf.rename()<cr>', opts)
+                    vim.keymap.set({ 'n', 'x' }, '<F3>', '<cmd>lua vim.lsp.buf.format({async = true})<cr>', opts)
+                    vim.keymap.set('n', '<F4>', '<cmd>lua vim.lsp.buf.code_action()<cr>', opts)
+                end,
+            })
+
+            require('mason-lspconfig').setup({
+                ensure_installed = {},
+                handlers = {
+                    -- this first function is the "default handler"
+                    -- it applies to every language server without a "custom handler"
+                    function(server_name)
+                        require('lspconfig')[server_name].setup({})
+                    end,
+                }
+            })
+
+            require('lspconfig').uiua.setup({})
+        end
     },
     {
         "folke/trouble.nvim", -- https://github.com/folke/trouble.nvim
         config = function() require("trouble").setup() end,
-        keys = { { "<C-k>", "<cmd>TroubleToggle<CR>" } }
+        keys = { { "<C-k>", "<cmd>Trouble diagnostics toggle<CR>", desc = "Diagnostics (Trouble)" } }
     },
     {
         "windwp/nvim-autopairs", -- https://github.com/windwp/nvim-autopairs
@@ -95,10 +136,10 @@ require("lazy").setup({
         'numToStr/Comment.nvim', -- https://github.com/numToStr/Comment.nvim
         opts = {
             toggler = {
-                line = '<C-/>'
+                line = '<C-_>'
             },
             opleader = {
-                line = '<C-/>',
+                line = '<C-_>',
             },
         },
         lazy = false,
@@ -172,7 +213,21 @@ require("lazy").setup({
         "akinsho/bufferline.nvim", -- https://github.com/akinsho/bufferline.nvim
         version = "*",
         dependencies = 'nvim-tree/nvim-web-devicons',
-        config = function() require("bufferline").setup() end
+        config = function()
+            require("bufferline").setup({
+                options = {
+                    diagnostics = "nvim_lsp",
+                    diagnostics_indicator = function(count, level, diagnostics_dict, context)
+                        local s = " "
+                        for e, n in pairs(diagnostics_dict) do
+                            local sym = e == "error" and " " or (e == "warning" and " " or " ")
+                            s = s .. n .. sym
+                        end
+                        return s
+                    end
+                }
+            })
+        end
     },
     {
         "lewis6991/gitsigns.nvim", -- https://github.com/lewis6991/gitsigns.nvim
@@ -224,25 +279,35 @@ require("lazy").setup({
     },
     {
         "akinsho/toggleterm.nvim", -- https://github.com/akinsho/toggleterm.nvim
-        config = function() require("toggleterm").setup({ shell = "/bin/zsh" }) end,
+        lazy = false,
+        config = function()
+            require("toggleterm").setup({
+                shell = "/bin/zsh",
+                open_mapping = "<C-j>",
+            })
+        end,
         keys = {
-            { "<C-j>", "<cmd>ToggleTerm<Enter>", mode = { "n", "i", "t" }, silent = true },
-            { "<Esc>", "<C-\\><C-n>",            mode = "t",               silent = true }
+            { "<Esc>", "<C-\\><C-n>", mode = "t", silent = true }
         }
     },
 
     -- themes
-    { "morhetz/gruvbox" },            -- https://github.com/morhetz/gruvbox
-    { 'Mofiqul/vscode.nvim' },        -- https://github.com/Mofiqul/vscode.nvim
-    { "xiyaowong/nvim-transparent" }, -- https://github.com/xiyaowong/nvim-transparent
+    { 'Mofiqul/vscode.nvim',        lazy = true, }, -- https://github.com/Mofiqul/vscode.nvim
+    { "xiyaowong/nvim-transparent", lazy = true, }, -- https://github.com/xiyaowong/nvim-transparent
+    -- "Apeiros-46B/uiua.vim",  -- https://github.com/Apeiros-46B/uiua.vim
+    { "sputnick1124/uiua.vim" },                    -- https://github.com/sputnick1124/uiua.vim
 
     -- games
     {
         "seandewar/killersheep.nvim", -- :KillKillKill https://github.com/seandewar/killersheep.nvim
-        config = function() require("killersheep").setup { keymaps = { move_left = "<Left>", move_right = "<Right>" } } end
+        config = function() require("killersheep").setup { keymaps = { move_left = "<Left>", move_right = "<Right>" } } end,
+        lazy = true,
     },
-    { "alec-gibson/nvim-tetris" }, -- https://github.com/alec-gibson/nvim-tetris
-    { "ThePrimeagen/vim-be-good" } -- https://github.com/ThePrimeagen/vim-be-good
+    {
+        "alec-gibson/nvim-tetris", -- https://github.com/alec-gibson/nvim-tetris
+        lazy = true,
+    },
 })
 
 require("opts")
+

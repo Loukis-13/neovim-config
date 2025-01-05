@@ -16,12 +16,6 @@ vimp.imap('<A-Down>', '<Esc>:m+1<Enter>i')
 -- Delete
 vimp.vmap('<Backspace>', 'di')
 
--- Undo and redo
-vimp.nmap('<C-z>', ':u<Enter>') -- u
-vimp.imap('<C-z>', '<C-o>:u<Enter>')
-vimp.nmap('<C-y>', ':red<Enter>') -- <C-r>
-vimp.imap('<C-y>', '<C-o>:red<Enter>')
-
 -- Save and close
 vimp.nmap("<C-s>", ":w<CR>")
 vimp.imap("<C-s>", "<C-o>:w<CR>")
