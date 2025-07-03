@@ -8,13 +8,23 @@ vim.opt.rtp:prepend(lazypath)
 
 -- https://github.com/folke/lazy.nvim
 require("lazy").setup({
-    { "nvim-tree/nvim-web-devicons" },     -- https://github.com/nvim-tree/nvim-web-devicons
+    {
+        "echasnovski/mini.icons", -- https://github.com/echasnovski/mini.icons
+        lazy = true,
+        opts = {},
+        init = function()
+            package.preload["nvim-web-devicons"] = function()
+                require("mini.icons").mock_nvim_web_devicons()
+                return package.loaded["nvim-web-devicons"]
+            end
+        end,
+    },
     {
         'nvim-treesitter/nvim-treesitter', -- https://github.com/nvim-treesitter/nvim-treesitter
         build = ":TSUpdate",
         lazy = false,
-        branch = 'master',
-        -- branch = 'main',
+        -- branch = 'master',
+        branch = 'main',
     },
 
     -- Autocompletion
@@ -98,16 +108,8 @@ require("lazy").setup({
         opts = {},
     },
     {
-        'nvim-telescope/telescope.nvim', -- https://github.com/nvim-telescope/telescope.nvim
-        tag = '0.1.8',
-        dependencies = { 'nvim-lua/plenary.nvim', 'BurntSushi/ripgrep' },
-        keys = {
-            { "F", "<cmd>Telescope live_grep<CR>" },
-            { "G", "<cmd>Telescope git_status<CR>" }
-        }
-    },
-    {
         "julienvincent/nvim-paredit", -- https://github.com/julienvincent/nvim-paredit
+        -- "folliehiyuki/nvim-paredit", branch = "nvim-treesitter-main",
         config = function()
             local paredit = require("nvim-paredit")
 
@@ -121,24 +123,24 @@ require("lazy").setup({
                         "Splice sexp",
                         mode = { "n", "x", "o", "v" },
                     },
-                    ["<M-Right>"] = {
+                    ["<A-Right>"] = {
                         paredit.api.move_to_next_element_tail,
                         "Jump to next element tail",
                         repeatable = false,
                         mode = { "n", "i", "x", "o", "v" },
                     },
-                    ["<M-Left>"] = {
+                    ["<A-Left>"] = {
                         paredit.api.move_to_prev_element_head,
                         "Jump to previous element head",
                         repeatable = false,
                         mode = { "n", "i", "x", "o", "v" },
                     },
-                    ["<M-Up>"] = {
+                    ["<A-Up>"] = {
                         paredit.api.drag_element_backwards,
                         "Slurp forwards",
                         mode = { "n", "x", "o", "v" },
                     },
-                    ["<M-Down>"] = {
+                    ["<A-Down>"] = {
                         paredit.api.drag_element_forwards,
                         "Barf backwards",
                         mode = { "n", "x", "o", "v" },
@@ -160,18 +162,55 @@ require("lazy").setup({
     --     end
     -- },
 
-    -- {
-    --     "folke/which-key.nvim",
-    --     event = "VeryLazy",
-    --     opts = {},
-    --     keys = {
-    --         {
-    --             "<leader>?",
-    --             function() require("which-key").show({ global = false }) end,
-    --             desc = "Buffer Local Keymaps (which-key)",
-    --         },
-    --     },
-    -- },
+    {
+        "folke/which-key.nvim", -- https://github.com/folke/which-key.nvim
+        event = "VeryLazy",
+        opts = {},
+        keys = {
+            {
+                "<leader>?",
+                function() require("which-key").show({ global = false }) end,
+                desc = "Buffer Local Keymaps (which-key)",
+            },
+        },
+    },
+    {
+        "folke/snacks.nvim", -- https://github.com/folke/snacks.nvim
+        event = "VeryLazy",
+        opts = {
+            words = {},
+            gitbrowse = {},
+            lazygit = {},
+            picker = {
+                -- sources = {
+                --     explorer = {
+                --         win = {
+                --             list = {
+                --                 keys = {
+                --                     ["<c-b>"] = { "cancel", mode = { "i", "n" } },
+                --                     ["<c-u>"] = { "preview_scroll_up", mode = { "i", "n" } },
+                --                     ["<c-d>"] = { "preview_scroll_down", mode = { "i", "n" } },
+                --                 }
+                --             }
+                --         }
+                --     }
+                -- }
+            },
+            -- explorer = {},
+            bigfile = {},
+            image = {},
+            quickfile = {},
+        },
+        keys = {
+            { "]]",         "<Cmd>lua Snacks.words.jump(1, true)<CR>",  desc = "Next reference" },
+            { "[[",         "<Cmd>lua Snacks.words.jump(-1, true)<CR>", desc = "Previous reference" },
+            { "<leader>gB", "<Cmd>lua Snacks.gitbrowse()<CR>",          desc = "Git Browse",        mode = { "n", "v" } },
+            { "<leader>gg", "<Cmd>lua Snacks.lazygit()<CR>",            desc = "Lazygit" },
+            { "F",          "<Cmd>lua Snacks.picker.grep()<CR>",        desc = "Grep search" },
+            { "G",          "<Cmd>lua Snacks.lazygit()<CR>",            desc = "Lazy Git" },
+            -- { "<C-b>",      "<Cmd>lua Snacks.explorer()<CR>",           desc = "File explorer" },
+        }
+    },
 
     -- stylization
     {
@@ -208,43 +247,41 @@ require("lazy").setup({
             }
         },
     },
-    -- {
-    --     "nvim-neo-tree/neo-tree.nvim", -- https://github.com/nvim-neo-tree/neo-tree.nvim
-    --     lazy = false,
-    --     branch = "v3.x",
-    --     dependencies = {
-    --         "nvim-lua/plenary.nvim",
-    --         "nvim-tree/nvim-web-devicons",
-    --         "MunifTanjim/nui.nvim",
-    --     },
-    --     opts = {
-    --         window = {
-    --             mappings = {
-    --                 ["<C-f>"] = "none",
-    --                 ["<C-b>"] = "none",
-    --                 ["<C-d>"] = { "scroll_preview", config = { direction = -10 } },
-    --                 ["<C-u>"] = { "scroll_preview", config = { direction = 10 } },
-    --             }
-    --         }
-    --     },
-    --     init = function()
-    --         vim.api.nvim_create_autocmd({ "VimEnter" }, {
-    --             callback = function(data)
-    --                 if vim.fn.isdirectory(data.file) == 1 then
-    --                     vim.cmd.cd(data.file)
-    --                 end
-    --             end
-    --         })
-    --     end,
-    --     keys = {
-    --         { "<C-b>", "<Cmd>Neotree toggle<Enter>", mode = { "n", "i", "v" }, silent = true },
-    --     }
-    -- },
     {
-        "nvim-tree/nvim-tree.lua", -- https://github.com/nvim-tree/nvim-tree.lua/blob/master/doc/nvim-tree-lua.txt
+        "nvim-neo-tree/neo-tree.nvim", -- https://github.com/nvim-neo-tree/neo-tree.nvim
         lazy = false,
-        opts = { filters = { dotfiles = true } },
-        keys = { { "<C-b>", "<cmd>NvimTreeToggle<Enter>", mode = { "n", "i", "v" }, silent = true }, }
+        branch = "v3.x",
+        dependencies = {
+            "nvim-lua/plenary.nvim",
+            "nvim-tree/nvim-web-devicons",
+            "MunifTanjim/nui.nvim",
+        },
+        opts = {
+            source_selector = {
+                winbar = true,
+            },
+            window = {
+                width = 35,
+                mappings = {
+                    ["<C-f>"] = "none",
+                    ["<C-b>"] = "none",
+                    ["<C-d>"] = { "scroll_preview", config = { direction = -10 } },
+                    ["<C-u>"] = { "scroll_preview", config = { direction = 10 } },
+                }
+            }
+        },
+        init = function()
+            vim.api.nvim_create_autocmd({ "VimEnter" }, {
+                callback = function(data)
+                    if vim.fn.isdirectory(data.file) == 1 then
+                        vim.cmd.cd(data.file)
+                    end
+                end
+            })
+        end,
+        keys = {
+            { "<C-b>", "<Cmd>Neotree toggle<Enter>", mode = { "n", "i", "v" }, silent = true },
+        }
     },
     {
         "akinsho/toggleterm.nvim", -- https://github.com/akinsho/toggleterm.nvim
@@ -293,7 +330,6 @@ vim.opt.linebreak = true
 vim.opt.termguicolors = true
 vim.opt.shell = "/bin/zsh"
 vim.opt.splitright = true
--- vim.opt.winborder = 'rounded'
 vim.opt.wrap = false
 vim.opt.completeopt:append("noselect")
 vim.cmd("colorscheme vscode")
@@ -319,6 +355,14 @@ vim.diagnostic.config {
         source = "always",
     },
 }
+
+vim.api.nvim_create_autocmd({ "VimEnter" }, {
+    callback = function(data)
+        if vim.fn.isdirectory(data.file) == 1 then
+            vim.cmd.cd(data.file)
+        end
+    end
+})
 
 
 -- MAPPINGS
@@ -349,11 +393,11 @@ vim.keymap.set("n", "<C-v>", "p<Right>")
 vim.keymap.set("i", "<C-v>", "<Esc>pi<Right>")
 
 -- Lines selection
-vim.keymap.set({ "n", "i" }, "<S-Home>", "<Esc>v<Home>")
-vim.keymap.set({ "n", "i" }, "<S-End>", "<Esc>v<End>")
+vim.keymap.set({ "n", "v", "i" }, "<S-Home>", "<Esc>v<Home>")
+vim.keymap.set({ "n", "v", "i" }, "<S-End>", "<Esc>v<End>")
 for _, key in ipairs({ "Up", "Down", "Left", "Right" }) do
     vim.keymap.set(
-        { "n", "i", "v" },
+        { "n", "v", "i" },
         "<S-" .. key .. ">",
         function() return (vim.fn.mode() == "v" and "" or "<Esc>v") .. "<" .. key .. ">" end,
         { expr = true }
@@ -361,15 +405,15 @@ for _, key in ipairs({ "Up", "Down", "Left", "Right" }) do
 end
 
 -- Adjust indentation
-vim.keymap.set("v", "<Tab>", ">gv")
-vim.keymap.set("v", "<S-Tab>", "<gv")
+vim.keymap.set("v", "<Tab>", ">gv", { desc = "Add indentation" })
+vim.keymap.set("v", "<S-Tab>", "<gv", { desc = "Remove indentation" })
 
 -- QuickFix / Code action
-vim.keymap.set("n", "<C-.>", vim.lsp.buf.code_action)
+vim.keymap.set("n", "<C-.>", vim.lsp.buf.code_action, { desc = "QuickFix / Code action" })
 
 -- Format
-vim.keymap.set("n", "<C-f>", vim.lsp.buf.format)
+vim.keymap.set({ "n", "v", "i" }, "<C-f>", vim.lsp.buf.format, { desc = "Format" })
 
 -- Move with Meta key
-vim.keymap.set({ "n", "v", "i" }, "<M-Right>", "e", { noremap = true })
-vim.keymap.set({ "n", "v", "i" }, "<M-Left>", "b", { noremap = true })
+vim.keymap.set({ "n", "v", "i" }, "<A-Right>", "e", { noremap = true })
+vim.keymap.set({ "n", "v", "i" }, "<A-Left>", "b", { noremap = true })
