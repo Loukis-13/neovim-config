@@ -95,6 +95,8 @@ require("lazy").setup({
                     -- end
                 end,
             })
+
+            require('lspconfig').gleam.setup({})
         end
     },
     {
@@ -109,7 +111,6 @@ require("lazy").setup({
     },
     {
         "julienvincent/nvim-paredit", -- https://github.com/julienvincent/nvim-paredit
-        -- "folliehiyuki/nvim-paredit", branch = "nvim-treesitter-main",
         config = function()
             local paredit = require("nvim-paredit")
 
@@ -117,12 +118,12 @@ require("lazy").setup({
                 use_default_keys = false,
                 keys = {
                     ["<localleader>@"] = { paredit.unwrap.unwrap_form_under_cursor, "Splice sexp" },
-                    ["<localleader>o"] = { paredit.unwrap.unwrap_form_under_cursor, "Splice sexp" },
-                    ["<C-M-P><C-M-R>"] = {
-                        paredit.unwrap.unwrap_form_under_cursor,
-                        "Splice sexp",
-                        mode = { "n", "x", "o", "v" },
-                    },
+                    ["<localleader>o"] = { paredit.api.raise_form, "Raise form" },
+                    -- ["<C-A-Right>"] = { paredit.api.slurp_forwards, "Slurp forwards" },
+                    -- [">("] = { paredit.api.barf_backwards, "Barf backwards" },
+
+                    ["<C-A-Right>"] = { paredit.api.barf_forwards, "Barf forwards" },
+                    ["<C-A-Left>"] = { paredit.api.slurp_backwards, "Slurp backwards" },
                     ["<A-Right>"] = {
                         paredit.api.move_to_next_element_tail,
                         "Jump to next element tail",
@@ -270,15 +271,6 @@ require("lazy").setup({
                 }
             }
         },
-        init = function()
-            vim.api.nvim_create_autocmd({ "VimEnter" }, {
-                callback = function(data)
-                    if vim.fn.isdirectory(data.file) == 1 then
-                        vim.cmd.cd(data.file)
-                    end
-                end
-            })
-        end,
         keys = {
             { "<C-b>", "<Cmd>Neotree toggle<Enter>", mode = { "n", "i", "v" }, silent = true },
         }
@@ -292,18 +284,21 @@ require("lazy").setup({
 
     -- themes
     { 'Mofiqul/vscode.nvim',             lazy = true },                                  -- https://github.com/Mofiqul/vscode.nvim
-    { "xiyaowong/nvim-transparent",      lazy = true },                                  -- https://github.com/xiyaowong/nvim-transparent
     { "sputnick1124/uiua.vim",           ft = { 'uiua' } },                              -- https://github.com/sputnick1124/uiua.vim
-    -- { "Apeiros-46B/uiua.vim",            ft = { 'uiua' } },           -- https://github.com/Apeiros-46B/uiua.vim
     { 'HiPhish/rainbow-delimiters.nvim', main = "rainbow-delimiters.setup", opts = {} }, -- https://github.com/HiPhish/rainbow-delimiters.nvim
 
     -- games
     {
-        "seandewar/killersheep.nvim", -- :KillKillKill https://github.com/seandewar/killersheep.nvim
+        "seandewar/killersheep.nvim", -- https://github.com/seandewar/killersheep.nvim
         cmd = "KillKillKill",
         opts = { keymaps = { move_left = "<Left>", move_right = "<Right>" } },
     },
-    { "alec-gibson/nvim-tetris", cmd = "Tetris" }, -- https://github.com/alec-gibson/nvim-tetris
+    { "zyedidia/vim-snake",              cmd = "Snake" },
+    { "seandewar/nvimesweeper",          cmd = "Nvimesweeper" },
+    { "rktjmp/playtime.nvim",            cmd = "Playtime" },
+    { "seandewar/actually-doom.nvim",    cmd = "Doom" },
+    { "alanfortlink/blackjack.nvim",     cmd = "BlackJackNewGame" },
+    { "Eandrju/cellular-automaton.nvim", cmd = "CellularAutomaton" },
 })
 
 
@@ -360,8 +355,18 @@ vim.api.nvim_create_autocmd({ "VimEnter" }, {
     callback = function(data)
         if vim.fn.isdirectory(data.file) == 1 then
             vim.cmd.cd(data.file)
+            -- else
+            --     vim.cmd.cd(vim.fn.expand("%:h"))
         end
     end
+})
+
+vim.api.nvim_create_autocmd('FileType', {
+    pattern = require("nvim-treesitter").get_installed(),
+    callback = function()
+        vim.treesitter.start()
+        vim.wo.foldexpr = 'v:lua.vim.treesitter.foldexpr()'
+    end,
 })
 
 
@@ -385,6 +390,10 @@ vim.keymap.set({ "i", "n" }, "<C-s>", "<Cmd>w<CR>")
 
 -- Close buffer or quit
 vim.keymap.set("n", "qq", function() vim.cmd(#vim.fn.getbufinfo({ buflisted = 1 }) > 1 and "bd" or "q") end)
+
+-- Command move
+vim.keymap.set({ "n", "v", "i" }, "<D-Right>", "<End>")
+vim.keymap.set({ "n", "v", "i" }, "<D-Left>", "<Home>")
 
 -- Copy, cut and paste
 vim.keymap.set("v", "<C-c>", "y<Esc>i")
@@ -417,3 +426,6 @@ vim.keymap.set({ "n", "v", "i" }, "<C-f>", vim.lsp.buf.format, { desc = "Format"
 -- Move with Meta key
 vim.keymap.set({ "n", "v", "i" }, "<A-Right>", "e", { noremap = true })
 vim.keymap.set({ "n", "v", "i" }, "<A-Left>", "b", { noremap = true })
+
+-- Open Lazy
+vim.keymap.set("n", "L", "<Cmd>Lazy<Cr>")
