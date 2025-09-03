@@ -20,30 +20,30 @@ require("lazy").setup({
         end,
     },
     {
-        'nvim-treesitter/nvim-treesitter', -- https://github.com/nvim-treesitter/nvim-treesitter
+        "nvim-treesitter/nvim-treesitter", -- https://github.com/nvim-treesitter/nvim-treesitter
         build = ":TSUpdate",
         lazy = false,
-        -- branch = 'master',
-        branch = 'main',
+        branch = "main",
     },
 
     -- Autocompletion
     {
-        'hrsh7th/nvim-cmp', -- https://github.com/hrsh7th/nvim-cmp
-        event = 'InsertEnter',
+        "hrsh7th/nvim-cmp", -- https://github.com/hrsh7th/nvim-cmp
+        event = "InsertEnter",
         config = function()
-            local cmp = require('cmp')
+            local cmp = require("cmp")
 
             cmp.setup({
                 sources = {
-                    { name = 'nvim_lsp' },
+                    { name = "nvim_lsp" },
+                    -- { name = "copilot" },
                 },
                 mapping = cmp.mapping.preset.insert({
-                    ['<C-Space>'] = cmp.mapping.complete(),
-                    ['<C-u>'] = cmp.mapping.scroll_docs(-4),
-                    ['<C-d>'] = cmp.mapping.scroll_docs(4),
-                    ['<C-e>'] = cmp.mapping.abort(),
-                    ['<CR>'] = cmp.mapping.confirm({ select = true }),
+                    ["<C-Space>"] = cmp.mapping.complete(),
+                    ["<C-u>"] = cmp.mapping.scroll_docs(-4),
+                    ["<C-d>"] = cmp.mapping.scroll_docs(4),
+                    ["<C-e>"] = cmp.mapping.abort(),
+                    ["<CR>"] = cmp.mapping.confirm({ select = true }),
                 }),
                 snippet = {
                     expand = function(args)
@@ -64,39 +64,39 @@ require("lazy").setup({
         },
     },
     {
-        'neovim/nvim-lspconfig', -- https://github.com/neovim/nvim-lspconfig
-        cmd = { 'LspInfo', 'LspInstall', 'LspStart' },
-        event = { 'BufReadPre', 'BufNewFile' },
-        dependencies = { 'hrsh7th/cmp-nvim-lsp' },
+        "neovim/nvim-lspconfig", -- https://github.com/neovim/nvim-lspconfig
+        cmd = { "LspInfo", "LspInstall", "LspStart" },
+        event = { "BufReadPre", "BufNewFile" },
+        dependencies = { "hrsh7th/cmp-nvim-lsp" },
         config = function()
-            local lsp_defaults = require('lspconfig').util.default_config
+            local lsp_defaults = require("lspconfig").util.default_config
 
             -- Add cmp_nvim_lsp capabilities settings to lspconfig
             -- This should be executed before you configure any language server
             lsp_defaults.capabilities = vim.tbl_deep_extend(
-                'force',
+                "force",
                 lsp_defaults.capabilities,
-                require('cmp_nvim_lsp').default_capabilities()
+                require("cmp_nvim_lsp").default_capabilities()
             )
 
             -- LspAttach is where you enable features that only work
             -- if there is a language server active in the file
-            vim.api.nvim_create_autocmd('LspAttach', {
-                desc = 'LSP actions',
+            vim.api.nvim_create_autocmd("LspAttach", {
+                desc = "LSP actions",
                 callback = function(event)
-                    vim.keymap.set('n', 'K', function() vim.lsp.buf.hover({ border = 'rounded' }) end,
+                    vim.keymap.set("n", "K", function() vim.lsp.buf.hover({ border = "rounded" }) end,
                         { buffer = event.buf, desc = "Open documentation" })
-                    vim.keymap.set('n', 'gd', vim.lsp.buf.definition, { buffer = event.buf, desc = "Go to definition" })
-                    vim.keymap.set('n', '<F2>', vim.lsp.buf.rename, { buffer = event.buf, desc = "Rename" })
+                    vim.keymap.set("n", "gd", vim.lsp.buf.definition, { buffer = event.buf, desc = "Go to definition" })
+                    vim.keymap.set("n", "<F2>", vim.lsp.buf.rename, { buffer = event.buf, desc = "Rename" })
 
                     -- local client = vim.lsp.get_client_by_id(event.data.client_id)
-                    -- if client:supports_method('textDocument/completion') then
+                    -- if client:supports_method("textDocument/completion") then
                     --     vim.lsp.completion.enable(true, client.id, event.buf, { autotrigger = true })
                     -- end
                 end,
             })
 
-            require('lspconfig').gleam.setup({})
+            require("lspconfig").gleam.setup({})
         end
     },
     {
@@ -118,12 +118,13 @@ require("lazy").setup({
                 use_default_keys = false,
                 keys = {
                     ["<localleader>@"] = { paredit.unwrap.unwrap_form_under_cursor, "Splice sexp" },
-                    ["<localleader>o"] = { paredit.api.raise_form, "Raise form" },
-                    -- ["<C-A-Right>"] = { paredit.api.slurp_forwards, "Slurp forwards" },
-                    -- [">("] = { paredit.api.barf_backwards, "Barf backwards" },
+                    ["<localleader>o"] = { paredit.api.raise_element, "Raise element" },
+                    ["<localleader>O"] = { paredit.api.raise_form, "Raise form" },
+                    -- ["<C-A-Up>"] = { paredit.api.slurp_backwards, "Slurp forwards" },
+                    -- ["<C-A-Down>"] = { paredit.api.barf_backwards, "Barf backwards" },
 
+                    ["<C-A-Left>"] = { paredit.api.slurp_forwards, "Slurp forwards" },
                     ["<C-A-Right>"] = { paredit.api.barf_forwards, "Barf forwards" },
-                    ["<C-A-Left>"] = { paredit.api.slurp_backwards, "Slurp backwards" },
                     ["<A-Right>"] = {
                         paredit.api.move_to_next_element_tail,
                         "Jump to next element tail",
@@ -151,16 +152,28 @@ require("lazy").setup({
         end
     },
     {
-        'Olical/conjure', -- https://github.com/Olical/conjure
+        "Olical/conjure", -- https://github.com/Olical/conjure
         init = function()
             vim.g["conjure#client#clojure#nrepl#test#current_form_names"] = { "deftest", "defflow", "defspec" }
+            vim.g["conjure#mapping#doc_word"] = false -- Disable the documentation mapping
         end
     },
+    {
+        "Olical/aniseed",
+        ft = "fnl"
+    },
     -- {
-    --     'liquidz/elin', -- https://liquidz.github.io/elin/
-    --     init = function()
-    --         vim.g.elin_enable_default_key_mappings = true
-    --     end
+    --     "zbirenbaum/copilot.lua",
+    --     cmd = "Copilot",
+    --     event = "InsertEnter",
+    --     opts = {
+    --         suggestion = { enabled = false },
+    --         panel = { enabled = false },
+    --     },
+    -- },
+    -- {
+    --     "zbirenbaum/copilot-cmp",
+    --     opts = {},
     -- },
 
     {
@@ -178,29 +191,39 @@ require("lazy").setup({
     {
         "folke/snacks.nvim", -- https://github.com/folke/snacks.nvim
         event = "VeryLazy",
+        init = function()
+            -- vim.g.loaded_netrwPlugin = 1
+            -- vim.g.loaded_netrw = 1
+        end,
         opts = {
             words = {},
             gitbrowse = {},
             lazygit = {},
             picker = {
-                -- sources = {
-                --     explorer = {
-                --         win = {
-                --             list = {
-                --                 keys = {
-                --                     ["<c-b>"] = { "cancel", mode = { "i", "n" } },
-                --                     ["<c-u>"] = { "preview_scroll_up", mode = { "i", "n" } },
-                --                     ["<c-d>"] = { "preview_scroll_down", mode = { "i", "n" } },
+                --     sources = {
+                --         explorer = {
+                --             win = {
+                --                 list = {
+                --                     keys = {
+                --                         ["<c-b>"] = { "cancel", mode = { "i", "n" } },
+                --                         ["<c-u>"] = { "preview_scroll_up", mode = { "i", "n" } },
+                --                         ["<c-d>"] = { "preview_scroll_down", mode = { "i", "n" } },
+                --                     }
                 --                 }
                 --             }
                 --         }
                 --     }
-                -- }
             },
-            -- explorer = {},
+            -- explorer = {
+            --     replace_netrw = true
+            -- },
             bigfile = {},
             image = {},
             quickfile = {},
+            statuscolumn = {
+                right = { "mark", "sign" },
+                left = { "fold", "git" }
+            },
         },
         keys = {
             { "]]",         "<Cmd>lua Snacks.words.jump(1, true)<CR>",  desc = "Next reference" },
@@ -212,12 +235,35 @@ require("lazy").setup({
             -- { "<C-b>",      "<Cmd>lua Snacks.explorer()<CR>",           desc = "File explorer" },
         }
     },
+    {
+        "epwalsh/obsidian.nvim",
+        version = "*",
+        lazy = true,
+        ft = "markdown",
+        dependencies = {
+            "nvim-lua/plenary.nvim",
+            "hrsh7th/nvim-cmp",
+            "nvim-treesitter/nvim-treesitter",
+        },
+        opts = {
+            workspaces = {
+                -- {
+                --     name = "personal",
+                --     path = "~/vaults/personal",
+                -- },
+                {
+                    name = "nubank",
+                    path = "~/vaults/nubank",
+                },
+            },
+        },
+    },
 
     -- stylization
     {
         "akinsho/bufferline.nvim", -- https://github.com/akinsho/bufferline.nvim
         version = "*",
-        dependencies = 'nvim-tree/nvim-web-devicons',
+        dependencies = "nvim-tree/nvim-web-devicons",
         opts = {
             options = {
                 diagnostics = "nvim_lsp",
@@ -278,14 +324,14 @@ require("lazy").setup({
     {
         "akinsho/toggleterm.nvim", -- https://github.com/akinsho/toggleterm.nvim
         event = "VeryLazy",
-        opts = { shell = "/bin/zsh", open_mapping = "<C-j>", },
+        opts = { shell = "/bin/zsh", open_mapping = "<C-j>" },
         keys = { { "<Esc>", "<C-\\><C-n>", mode = "t", silent = true } }
     },
 
     -- themes
-    { 'Mofiqul/vscode.nvim',             lazy = true },                                  -- https://github.com/Mofiqul/vscode.nvim
-    { "sputnick1124/uiua.vim",           ft = { 'uiua' } },                              -- https://github.com/sputnick1124/uiua.vim
-    { 'HiPhish/rainbow-delimiters.nvim', main = "rainbow-delimiters.setup", opts = {} }, -- https://github.com/HiPhish/rainbow-delimiters.nvim
+    { "Mofiqul/vscode.nvim",             lazy = true },                                  -- https://github.com/Mofiqul/vscode.nvim
+    { "sputnick1124/uiua.vim",           ft = { "uiua" } },                              -- https://github.com/sputnick1124/uiua.vim
+    { "HiPhish/rainbow-delimiters.nvim", main = "rainbow-delimiters.setup", opts = {} }, -- https://github.com/HiPhish/rainbow-delimiters.nvim
 
     -- games
     {
@@ -296,17 +342,17 @@ require("lazy").setup({
     { "zyedidia/vim-snake",              cmd = "Snake" },
     { "seandewar/nvimesweeper",          cmd = "Nvimesweeper" },
     { "rktjmp/playtime.nvim",            cmd = "Playtime" },
-    { "seandewar/actually-doom.nvim",    cmd = "Doom" },
+    { "seandewar/actually-doom.nvim",    cmd = "Doom",             branch = "listener_long_path" },
     { "alanfortlink/blackjack.nvim",     cmd = "BlackJackNewGame" },
     { "Eandrju/cellular-automaton.nvim", cmd = "CellularAutomaton" },
 })
 
 
 -- OPTIONS
-vim.g.mapleader = ','
-vim.g.maplocalleader = ','
+vim.g.mapleader = ","
+vim.g.maplocalleader = ","
 vim.opt.cursorline = true
-vim.opt.mouse = 'a'
+vim.opt.mouse = "a"
 vim.opt.number = true
 vim.opt.hidden = true
 vim.opt.expandtab = true
@@ -314,12 +360,12 @@ vim.opt.autoindent = true
 vim.opt.smartindent = true
 vim.opt.shiftwidth = 4
 vim.opt.tabstop = 4
-vim.opt.encoding = 'UTF-8'
+vim.opt.encoding = "UTF-8"
 vim.opt.history = 5000
-vim.opt.clipboard = 'unnamedplus'
+vim.opt.clipboard = "unnamedplus"
 vim.opt.laststatus = 2
 vim.opt.updatetime = 300
-vim.opt.signcolumn = 'yes'
+vim.opt.signcolumn = "yes"
 vim.opt.cindent = true
 vim.opt.linebreak = true
 vim.opt.termguicolors = true
@@ -334,14 +380,14 @@ vim.filetype.add({ pattern = { [".*.json.base"] = "json" } })
 vim.diagnostic.config {
     signs = {
         text = {
-            [vim.diagnostic.severity.ERROR] = '✘',
-            [vim.diagnostic.severity.WARN] = '▲',
-            [vim.diagnostic.severity.HINT] = '⚑',
-            [vim.diagnostic.severity.INFO] = '»',
+            [vim.diagnostic.severity.ERROR] = "✘",
+            [vim.diagnostic.severity.WARN] = "▲",
+            [vim.diagnostic.severity.HINT] = "⚑",
+            [vim.diagnostic.severity.INFO] = "»",
         },
     },
     virtual_text = {
-        prefix = ' ',
+        prefix = " ",
     },
     update_in_insert = true,
     underline = true,
@@ -355,25 +401,27 @@ vim.api.nvim_create_autocmd({ "VimEnter" }, {
     callback = function(data)
         if vim.fn.isdirectory(data.file) == 1 then
             vim.cmd.cd(data.file)
-            -- else
-            --     vim.cmd.cd(vim.fn.expand("%:h"))
+        elseif vim.fn.expand("%:p") ~= "" then
+            vim.cmd.cd(vim.fn.expand("%:p:h"))
         end
     end
 })
 
-vim.api.nvim_create_autocmd('FileType', {
+vim.api.nvim_create_autocmd("FileType", {
     pattern = require("nvim-treesitter").get_installed(),
     callback = function()
         vim.treesitter.start()
-        vim.wo.foldexpr = 'v:lua.vim.treesitter.foldexpr()'
+        vim.wo.foldmethod = "expr"
+        vim.wo.foldexpr = "v:lua.vim.treesitter.foldexpr()"
+        vim.cmd("silent! %foldopen!")
     end,
 })
 
 
 -- MAPPINGS
 -- Buffers navigation
-vim.keymap.set("n", ">", ":bn<CR>")
-vim.keymap.set("n", "<", ":bp<CR>")
+vim.keymap.set("n", ">", ":bn<CR>", { silent = true })
+vim.keymap.set("n", "<", ":bp<CR>", { silent = true })
 
 -- Comment
 vim.keymap.set({ "n", "v", "i" }, "<C-/>", "<Cmd>normal gcc<CR>", { noremap = false })
@@ -385,19 +433,15 @@ vim.keymap.set({ "n", "i" }, "<A-Down>", "<Cmd>m+1<CR>")
 -- Delete selection
 vim.keymap.set("v", "<BS>", "di")
 
--- Save and close
+-- Save
 vim.keymap.set({ "i", "n" }, "<C-s>", "<Cmd>w<CR>")
 
 -- Close buffer or quit
 vim.keymap.set("n", "qq", function() vim.cmd(#vim.fn.getbufinfo({ buflisted = 1 }) > 1 and "bd" or "q") end)
 
--- Command move
-vim.keymap.set({ "n", "v", "i" }, "<D-Right>", "<End>")
-vim.keymap.set({ "n", "v", "i" }, "<D-Left>", "<Home>")
-
 -- Copy, cut and paste
-vim.keymap.set("v", "<C-c>", "y<Esc>i")
-vim.keymap.set("v", "<C-x>", "d<Esc>i")
+vim.keymap.set("v", "<C-c>", "y<Esc>")
+vim.keymap.set("v", "<C-x>", "d<Esc>")
 vim.keymap.set("n", "<C-v>", "p<Right>")
 vim.keymap.set("i", "<C-v>", "<Esc>pi<Right>")
 
@@ -429,3 +473,24 @@ vim.keymap.set({ "n", "v", "i" }, "<A-Left>", "b", { noremap = true })
 
 -- Open Lazy
 vim.keymap.set("n", "L", "<Cmd>Lazy<Cr>")
+
+-- Command keymaps
+if vim.fn.has("mac") then
+    -- Command
+    vim.keymap.set({ "n", "v", "i" }, "<D-/>", "<Cmd>normal gcc<CR>", { noremap = false })
+
+    -- Save
+    vim.keymap.set({ "i", "n" }, "<D-s>", "<Cmd>w<CR>")
+
+    -- Move
+    vim.keymap.set({ "n", "v", "i" }, "<D-Right>", "<End>")
+    vim.keymap.set({ "n", "v", "i" }, "<D-Left>", "<Home>")
+    vim.keymap.set({ "n", "v", "i" }, "<D-Up>", "<PageUp>")
+    vim.keymap.set({ "n", "v", "i" }, "<D-Down>", "<PageDown>")
+
+    -- Copy, cut and paste
+    vim.keymap.set("v", "<D-c>", "y<Esc>")
+    vim.keymap.set("v", "<D-x>", "d<Esc>")
+    vim.keymap.set("n", "<D-v>", "p<Right>")
+    vim.keymap.set("i", "<D-v>", "<Esc>pi<Right>")
+end
