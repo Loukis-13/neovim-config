@@ -1,3 +1,5 @@
+vim.filetype.add({ pattern = { [".*.json.base"] = "json" } })
+
 vim.keymap.set("n", "<localleader>nd", "i#nu/tapd <Esc>")
 vim.keymap.set("n", "<localleader>nt", "i#nu/tap <Esc>")
 
