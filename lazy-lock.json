@@ -1,5 +1,5 @@
 {
-  "actually-doom.nvim": { "branch": "listener_long_path", "commit": "25268f4c8f4eebd0c89d5e42b6ad737f07640117" },
+  "actually-doom.nvim": { "branch": "master", "commit": "eea18456e09b00ae61ee27c7199f1e193e16c362" },
   "aniseed": { "branch": "master", "commit": "97078331cf59765613d248ca6d6c7942ebbd219b" },
   "blackjack.nvim": { "branch": "main", "commit": "cf59e79de25b87a3ef68b92b3277c50d4b345a92" },
   "bufferline.nvim": { "branch": "main", "commit": "655133c3b4c3e5e05ec549b9f8cc2894ac6f51b3" },

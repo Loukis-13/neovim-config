@@ -55,7 +55,7 @@ vim.api.nvim_create_autocmd({ "VimEnter" }, {
 })
 
 vim.api.nvim_create_autocmd("FileType", {
-    pattern = require("nvim-treesitter").get_installed(),
+    pattern = ((require("nvim-treesitter") and require("nvim-treesitter").get_installed()) or {}),
     callback = function()
         vim.treesitter.start()
         vim.wo.foldmethod = "expr"

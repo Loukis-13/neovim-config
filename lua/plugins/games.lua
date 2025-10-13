@@ -7,7 +7,7 @@ return {
     { "zyedidia/vim-snake",              cmd = "Snake" },
     { "seandewar/nvimesweeper",          cmd = "Nvimesweeper" },
     { "rktjmp/playtime.nvim",            cmd = "Playtime" },
-    { "seandewar/actually-doom.nvim",    cmd = "Doom",             branch = "listener_long_path" },
+    { "seandewar/actually-doom.nvim",    cmd = "Doom" },
     { "alanfortlink/blackjack.nvim",     cmd = "BlackJackNewGame" },
     { "Eandrju/cellular-automaton.nvim", cmd = "CellularAutomaton" },
 }
