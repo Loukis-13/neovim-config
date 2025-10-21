@@ -1,9 +1,12 @@
 return {
     {
-        "epwalsh/obsidian.nvim",
+        "obsidian-nvim/obsidian.nvim",
         version = "*",
         lazy = true,
-        ft = "markdown",
+        event = {
+            "BufReadPre " .. vim.fn.expand "~" .. "/vaults/*.md",
+            "BufNewFile " .. vim.fn.expand "~" .. "/vaults/*.md",
+        },
         dependencies = {
             "nvim-lua/plenary.nvim",
             "hrsh7th/nvim-cmp",

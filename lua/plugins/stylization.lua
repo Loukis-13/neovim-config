@@ -46,6 +46,7 @@ return {
     },
     {
         "nvim-neo-tree/neo-tree.nvim", -- https://github.com/nvim-neo-tree/neo-tree.nvim
+        enabled = false,
         lazy = false,
         branch = "v3.x",
         dependencies = {
