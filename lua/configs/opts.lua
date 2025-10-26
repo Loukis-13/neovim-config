@@ -21,6 +21,7 @@ vim.opt.termguicolors = true
 vim.opt.shell = "/bin/zsh"
 vim.opt.splitright = true
 vim.opt.wrap = false
+vim.opt.winborder = 'rounded'
 vim.opt.completeopt:append("noselect")
 vim.cmd("colorscheme vscode")
 
@@ -45,11 +46,15 @@ vim.diagnostic.config {
 }
 
 vim.api.nvim_create_autocmd({ "VimEnter" }, {
-    callback = function(data)
-        if vim.fn.isdirectory(data.file) == 1 then
-            vim.cmd.cd(data.file)
-        elseif vim.fn.expand("%:p") ~= "" then
-            vim.cmd.cd(vim.fn.expand("%:p:h"))
+    callback = function(_)
+        for _, v in ipairs(vim.v.argv) do
+            if vim.fn.isdirectory(v) == 1 then
+                vim.cmd.cd(v)
+                break
+            elseif vim.fn.file_readable(v) == 1 then
+                vim.cmd.cd(vim.fn.fnamemodify(v, ":p:h"))
+                break
+            end
         end
     end
 })

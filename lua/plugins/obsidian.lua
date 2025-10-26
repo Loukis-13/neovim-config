@@ -9,10 +9,29 @@ return {
         },
         dependencies = {
             "nvim-lua/plenary.nvim",
-            "hrsh7th/nvim-cmp",
+            "saghen/blink.cmp",
             "nvim-treesitter/nvim-treesitter",
         },
+        init = function()
+            -- Auto commit and push on exit
+            vim.api.nvim_create_autocmd("VimLeavePre", {
+                pattern = vim.fn.expand "~" .. "/vaults/*.md",
+                callback = function()
+                    local handle = io.popen("git status --porcelain")
+                    if not handle then return end
+                    local output = handle:read("*a")
+                    handle:close()
+                    if output ~= "" then
+                        local message = vim.fn.strftime("%Y-%m-%d %H:%M") .. " - " .. vim.fn.expand("$USER")
+                        os.execute('git add -A')
+                        os.execute('git commit -m "' .. message .. '"')
+                        os.execute('git push')
+                    end
+                end
+            })
+        end,
         opts = {
+            legacy_commands = false,
             workspaces = {
                 -- {
                 --     name = "personal",
@@ -24,5 +43,10 @@ return {
                 },
             },
         },
+    },
+    {
+        "OXY2DEV/markview.nvim",
+        lazy = false,
+        dependencies = { "saghen/blink.cmp" },
     },
 }
