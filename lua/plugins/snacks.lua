@@ -5,6 +5,7 @@ return {
         lazy = false,
         opts = {
             words = {},
+            gh = {},
             gitbrowse = {},
             lazygit = {},
             bigfile = {},
@@ -73,11 +74,12 @@ return {
         keys = {
             { "]]",         "<Cmd>lua Snacks.words.jump(1, true)<CR>",  desc = "Next reference" },
             { "[[",         "<Cmd>lua Snacks.words.jump(-1, true)<CR>", desc = "Previous reference" },
-            { "<leader>gB", "<Cmd>lua Snacks.gitbrowse()<CR>",          desc = "Git Browse",        mode = { "n", "v" } },
+            { "<leader>gb", "<Cmd>lua Snacks.gitbrowse()<CR>",          desc = "Git Browse",                 mode = { "n", "v" } },
             { "F",          "<Cmd>lua Snacks.picker.grep()<CR>",        desc = "Grep search" },
             { "G",          "<Cmd>lua Snacks.lazygit()<CR>",            desc = "Lazygit" },
             { "<C-b>",      "<Cmd>lua Snacks.explorer()<CR>",           desc = "File explorer" },
-            -- { "qq",         "<Cmd>lua Snacks.bufdelete.delete()<CR>",   desc = "Delete buffer" }
+            { "<leader>.",  function() Snacks.scratch() end,            desc = "Toggle Scratch Buffer" },
+            { "<leader>gp", function() Snacks.picker.gh_pr() end, desc = "GitHub Pull Requests (open)" },
         }
     },
 }

@@ -16,7 +16,8 @@ vim.keymap.set("v", "<BS>", "di")
 vim.keymap.set({ "i", "n" }, "<C-s>", "<Cmd>w<CR>")
 
 -- Close buffer or quit
-vim.keymap.set("n", "qq", function() vim.cmd(#vim.fn.getbufinfo({ buflisted = 1 }) > 1 and "bd" or "q") end)
+vim.keymap.set("n", "qq",
+    function() vim.cmd(#vim.fn.getbufinfo({ buflisted = 1 }) > 1 and "lua Snacks.bufdelete.delete()" or "q") end)
 
 -- Copy, cut and paste
 vim.keymap.set("v", "<C-c>", "y<Esc>")
@@ -50,8 +51,10 @@ vim.keymap.set("n", "<C-.>", vim.lsp.buf.code_action, { desc = "QuickFix / Code 
 vim.keymap.set({ "n", "v", "i" }, "<C-f>", vim.lsp.buf.format, { desc = "Format" })
 
 -- Move with Meta key
-vim.keymap.set({ "n", "v", "i" }, "<A-Right>", "e", { noremap = true })
-vim.keymap.set({ "n", "v", "i" }, "<A-Left>", "b", { noremap = true })
+vim.keymap.set({ "n", "v" }, "<A-Right>", "e", { noremap = true })
+vim.keymap.set({ "n", "v" }, "<A-Left>", "b", { noremap = true })
+vim.keymap.set({ "i" }, "<A-Right>", "<C-o>e<Right>", { noremap = true })
+vim.keymap.set({ "i" }, "<A-Left>", "<C-o>b", { noremap = true })
 
 -- Open Lazy
 vim.keymap.set("n", "L", "<Cmd>Lazy<Cr>")

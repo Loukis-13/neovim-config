@@ -13,6 +13,14 @@ return {
             "nvim-treesitter/nvim-treesitter",
         },
         init = function()
+            -- Pull changes on enter
+            vim.api.nvim_create_autocmd("VimEnter", {
+                pattern = vim.fn.expand "~" .. "/vaults/*.md",
+                callback = function()
+                    os.execute('git pull')
+                end
+            })
+
             -- Auto commit and push on exit
             vim.api.nvim_create_autocmd("VimLeavePre", {
                 pattern = vim.fn.expand "~" .. "/vaults/*.md",
@@ -33,10 +41,10 @@ return {
         opts = {
             legacy_commands = false,
             workspaces = {
-                -- {
-                --     name = "personal",
-                --     path = "~/vaults/personal",
-                -- },
+                {
+                    name = "personal",
+                    path = "~/vaults/personal",
+                },
                 {
                     name = "nubank",
                     path = "~/vaults/nubank",
