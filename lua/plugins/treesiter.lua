@@ -4,5 +4,8 @@ return {
         build = ":TSUpdate",
         lazy = false,
         branch = "main",
+        opts = {
+            ensure_installed = { "regex", "markdown", "html" }
+        }
     },
 }
