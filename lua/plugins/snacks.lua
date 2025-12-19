@@ -11,11 +11,13 @@ return {
             bigfile = {},
             image = {},
             quickfile = {},
+            explorer = {},
+            -- scroll = {},   -- no noticeble changes
+            -- notifier = {},
             statuscolumn = {
                 right = { "mark", "sign" },
                 left = { "fold", "git" }
             },
-            explorer = {},
             picker = {
                 sources = {
                     explorer = {
@@ -68,18 +70,16 @@ return {
                     end
                 },
             },
-            -- scroll = {},   -- no noticeble changes
-            -- notifier = {},
         },
         keys = {
             { "]]",         "<Cmd>lua Snacks.words.jump(1, true)<CR>",  desc = "Next reference" },
             { "[[",         "<Cmd>lua Snacks.words.jump(-1, true)<CR>", desc = "Previous reference" },
             { "<leader>gb", "<Cmd>lua Snacks.gitbrowse()<CR>",          desc = "Git Browse",                 mode = { "n", "v" } },
             { "F",          "<Cmd>lua Snacks.picker.grep()<CR>",        desc = "Grep search" },
-            { "G",          "<Cmd>lua Snacks.lazygit()<CR>",            desc = "Lazygit" },
+            { "<leader>gg", "<Cmd>lua Snacks.lazygit()<CR>",            desc = "Lazygit" },
             { "<C-b>",      "<Cmd>lua Snacks.explorer()<CR>",           desc = "File explorer" },
             { "<leader>.",  function() Snacks.scratch() end,            desc = "Toggle Scratch Buffer" },
-            { "<leader>gp", function() Snacks.picker.gh_pr() end, desc = "GitHub Pull Requests (open)" },
+            { "<leader>gp", function() Snacks.picker.gh_pr() end,       desc = "GitHub Pull Requests (open)" },
         }
     },
 }
