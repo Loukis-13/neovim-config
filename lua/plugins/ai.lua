@@ -36,7 +36,7 @@ return {
             end, { desc = "Accept Copilot NES suggestion", expr = true })
 
             -- Clear copilot suggestion with Esc if visible, otherwise preserve default Esc behavior
-            vim.keymap.set({"n", "i"}, "<esc>", function()
+            vim.keymap.set({ "n", "i" }, "<esc>", function()
                 if not require("copilot-lsp.nes").clear() then
                     vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes("<esc>", true, false, true), "n", true)
                 end

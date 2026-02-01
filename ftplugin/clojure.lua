@@ -7,3 +7,5 @@ vim.keymap.set("n", "<localleader>nf", "i#nu/ftap <Esc>")
 vim.keymap.set("ia", "nd", "#nu/tapd")
 vim.keymap.set("ia", "nt", "#nu/tap")
 vim.keymap.set("ia", "nf", "#nu/ftap")
+
+vim.keymap.set("v", "<localleader>nc", "<Esc>`>a<Cr>  (catch Exception e (tap> e)))<Esc>`<i(try<Cr><Esc>")
