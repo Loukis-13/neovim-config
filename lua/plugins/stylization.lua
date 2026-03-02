@@ -19,7 +19,12 @@ return {
                 component_separators = { left = "|", right = "|" },
                 section_separators = { left = "", right = "" },
                 globalstatus = true,
-            }
+            },
+            sections = {
+                lualine_c = {
+                    { "filename", path = 1 },
+                },
+            },
         },
     },
     {
@@ -43,34 +48,6 @@ return {
     {
         "lewis6991/gitsigns.nvim", -- https://github.com/lewis6991/gitsigns.nvim
         opts = {},
-    },
-    {
-        "nvim-neo-tree/neo-tree.nvim", -- https://github.com/nvim-neo-tree/neo-tree.nvim
-        enabled = false,
-        lazy = false,
-        branch = "v3.x",
-        dependencies = {
-            "nvim-lua/plenary.nvim",
-            "nvim-tree/nvim-web-devicons",
-            "MunifTanjim/nui.nvim",
-        },
-        opts = {
-            source_selector = {
-                winbar = true,
-            },
-            window = {
-                width = 35,
-                mappings = {
-                    ["<C-f>"] = "none",
-                    ["<C-b>"] = "none",
-                    ["<C-d>"] = { "scroll_preview", config = { direction = -10 } },
-                    ["<C-u>"] = { "scroll_preview", config = { direction = 10 } },
-                }
-            }
-        },
-        keys = {
-            { "<C-b>", "<Cmd>Neotree toggle<Enter>", mode = { "n", "i", "v" }, silent = true },
-        }
     },
     {
         "akinsho/toggleterm.nvim", -- https://github.com/akinsho/toggleterm.nvim

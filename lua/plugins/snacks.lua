@@ -72,14 +72,16 @@ return {
             },
         },
         keys = {
-            { "]]",         "<Cmd>lua Snacks.words.jump(1, true)<CR>",  desc = "Next reference" },
-            { "[[",         "<Cmd>lua Snacks.words.jump(-1, true)<CR>", desc = "Previous reference" },
-            { "<leader>gb", "<Cmd>lua Snacks.gitbrowse()<CR>",          desc = "Git Browse",                 mode = { "n", "v" } },
-            { "F",          "<Cmd>lua Snacks.picker.grep()<CR>",        desc = "Grep search" },
-            { "<leader>gg", "<Cmd>lua Snacks.lazygit()<CR>",            desc = "Lazygit" },
-            { "<C-b>",      "<Cmd>lua Snacks.explorer()<CR>",           desc = "File explorer" },
-            { "<leader>.",  function() Snacks.scratch() end,            desc = "Toggle Scratch Buffer" },
-            { "<leader>gp", function() Snacks.picker.gh_pr() end,       desc = "GitHub Pull Requests (open)" },
+            { "]]",         "<Cmd>lua Snacks.words.jump(1, true)<CR>",          desc = "Next reference" },
+            { "[[",         "<Cmd>lua Snacks.words.jump(-1, true)<CR>",         desc = "Previous reference" },
+            { "<leader>gb", "<Cmd>lua Snacks.gitbrowse()<CR>",                  desc = "Git Browse",                    mode = { "n", "v" } },
+            { "F",          "<Cmd>lua Snacks.picker.grep()<CR>",                desc = "Grep search" },
+            { "<leader>gg", "<Cmd>lua Snacks.lazygit()<CR>",                    desc = "Lazygit" },
+            { "<C-b>",      "<Cmd>lua Snacks.explorer()<CR>",                   desc = "File explorer" },
+            { "<leader>.",  function() Snacks.scratch() end,                    desc = "Toggle Scratch Buffer" },
+            { "<leader>gp", function() Snacks.picker.gh_pr() end,               desc = "GitHub Pull Requests (open)" },
+            { "grr",        function() Snacks.picker.lsp_references() end,      desc = "See references for symbol" },
+            { "gri",        function() Snacks.picker.lsp_implementations() end, desc = "See implementations for symbol" }
         }
     },
 }

@@ -5,7 +5,7 @@ return {
         lazy = false,
         branch = "main",
         opts = {
-            ensure_installed = { "regex", "markdown", "html" }
+            ensure_installed = { "regex", "markdown", "html", "json" }
         }
     },
 }

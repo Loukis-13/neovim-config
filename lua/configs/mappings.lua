@@ -10,7 +10,7 @@ vim.keymap.set({ "n", "i" }, "<A-Up>", "<Cmd>m-2<CR>")
 vim.keymap.set({ "n", "i" }, "<A-Down>", "<Cmd>m+1<CR>")
 
 -- Delete selection
-vim.keymap.set("v", "<BS>", "di")
+vim.keymap.set("v", "<BS>", "\"_di")
 
 -- Save
 vim.keymap.set({ "i", "n" }, "<C-s>", "<Cmd>w<CR>")
@@ -24,9 +24,6 @@ vim.keymap.set("v", "<C-c>", "y<Esc>")
 vim.keymap.set("v", "<C-x>", "d<Esc>")
 vim.keymap.set("n", "<C-v>", "p<Right>")
 vim.keymap.set("i", "<C-v>", "<Esc>pi<Right>")
-
--- Signature help
-vim.keymap.set('n', 'grs', '<Plug>(nvim.lsp.ctrl-s)')
 
 -- Lines selection
 vim.keymap.set({ "n", "v", "i" }, "<S-Home>", "<Esc>v<Home>")

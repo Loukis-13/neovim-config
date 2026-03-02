@@ -30,7 +30,7 @@ return {
             })
 
             -- require("lspconfig").gleam.setup({})
-            vim.lsp.enable("gleam")
+            -- vim.lsp.enable("gleam")
         end
     },
 }
