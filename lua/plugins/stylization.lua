@@ -53,7 +53,10 @@ return {
         "akinsho/toggleterm.nvim", -- https://github.com/akinsho/toggleterm.nvim
         event = "VeryLazy",
         opts = { shell = "/bin/zsh", open_mapping = "<C-j>" },
-        keys = { { "<Esc>", "<C-\\><C-n>", mode = "t", silent = true } }
+        keys = {
+            { "<Esc>",   "<C-\\><C-n>", mode = "t", silent = true },
+            { "<S-Esc>", "<Esc>",       mode = "t", silent = true }
+        }
     },
 
     -- themes
