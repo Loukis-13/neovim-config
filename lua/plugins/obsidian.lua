@@ -8,9 +8,7 @@ return {
             "BufNewFile " .. vim.fn.expand "~" .. "/vaults/*.md",
         },
         dependencies = {
-            "nvim-lua/plenary.nvim",
             "saghen/blink.cmp",
-            "nvim-treesitter/nvim-treesitter",
         },
         init = function()
             local vaults_path = vim.fn.expand "~" .. "/vaults"

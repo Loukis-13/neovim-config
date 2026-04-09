@@ -60,7 +60,10 @@ vim.api.nvim_create_autocmd({ "VimEnter" }, {
 })
 
 vim.api.nvim_create_autocmd("FileType", {
-    pattern = ((require("nvim-treesitter") and require("nvim-treesitter").get_installed()) or {}),
+    pattern = vim.iter(vim.api.nvim_get_runtime_file('parser/*', true))
+        :map(function(p) return vim.fn.fnamemodify(p, ':t:r') end)
+        :unique()
+        :totable(),
     callback = function()
         vim.treesitter.start()
         vim.wo.foldmethod = "expr"

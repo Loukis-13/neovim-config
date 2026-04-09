@@ -43,24 +43,17 @@ return {
                 nerd_font_variant = 'mono'
             },
             completion = {
-                list = { selection = { preselect = false, auto_insert = false } },
-                accept = {
-                    -- experimental auto-brackets support
-                    auto_brackets = {
-                        enabled = true,
-                    },
-                },
+                trigger = { show_on_keyword = true },
+                list = { selection = { preselect = true, auto_insert = false } },
+                accept = { auto_brackets = { enabled = true, }, },
+                ghost_text = { enabled = true, },
                 menu = {
-                    draw = {
-                        treesitter = { "lsp" },
-                    },
+                    auto_show = false,
+                    draw = { treesitter = { "lsp" }, },
                 },
                 documentation = {
                     auto_show = true,
                     auto_show_delay_ms = 200,
-                },
-                ghost_text = {
-                    enabled = vim.g.ai_cmp,
                 },
             },
             snippets = {
