@@ -24,8 +24,27 @@ return {
             vim.api.nvim_create_autocmd("LspAttach", {
                 desc = "LSP actions",
                 callback = function(event)
-                    vim.lsp.inlay_hint.enable()
-                    vim.lsp.codelens.enable()
+                    vim.lsp.inlay_hint.enable(true, { client_id = event.data.client_id, bufnr = event.buf })
+                    vim.lsp.codelens.enable(true, { client_id = event.data.client_id, bufnr = event.buf })
+
+                    -- -- Completion
+                    -- vim.lsp.completion.enable(true, event.data.client_id, event.buf, {
+                    --     autotrigger = true,
+                    --     convert = function(item)
+                    --         return { abbr = item.label:gsub('%b()', '') }
+                    --     end,
+                    -- })
+                    -- vim.keymap.set('i', '<c-space>', function()
+                    --     vim.lsp.completion.get()
+                    -- end)
+                    --
+                    -- -- Inline completion
+                    -- vim.lsp.inline_completion.enable()
+                    -- vim.keymap.set('i', '<Tab>', function()
+                    --     if not vim.lsp.inline_completion.get() then
+                    --         return '<Tab>'
+                    --     end
+                    -- end, { expr = true, desc = 'Accept the current inline completion' })
 
                     vim.keymap.set("n", "gd", vim.lsp.buf.definition, { buffer = event.buf, desc = "Go to definition" })
                     vim.keymap.set("n", "<F2>", vim.lsp.buf.rename, { buffer = event.buf, desc = "Rename" })
