@@ -24,13 +24,13 @@ return {
             vim.api.nvim_create_autocmd("LspAttach", {
                 desc = "LSP actions",
                 callback = function(event)
+                    vim.lsp.inlay_hint.enable()
+                    vim.lsp.codelens.enable()
+
                     vim.keymap.set("n", "gd", vim.lsp.buf.definition, { buffer = event.buf, desc = "Go to definition" })
                     vim.keymap.set("n", "<F2>", vim.lsp.buf.rename, { buffer = event.buf, desc = "Rename" })
                 end,
             })
-
-            -- require("lspconfig").gleam.setup({})
-            -- vim.lsp.enable("gleam")
         end
     },
 }

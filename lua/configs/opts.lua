@@ -1,31 +1,33 @@
--- vim.g.mapleader = ","
--- vim.g.maplocalleader = ","
+vim.opt.autoindent = true
+vim.opt.cindent = true
+vim.opt.clipboard = "unnamedplus"
+vim.opt.completeopt:append("noselect")
+vim.opt.cpoptions:append("I")
+vim.opt.cursorcolumn = true
 vim.opt.cursorline = true
+vim.opt.encoding = "UTF-8"
+vim.opt.expandtab = true
+vim.opt.foldlevel = 5
+vim.opt.hidden = true
+vim.opt.history = 5000
+vim.opt.laststatus = 2
 vim.opt.mouse = "a"
 vim.opt.number = true
-vim.opt.hidden = true
-vim.opt.expandtab = true
-vim.opt.autoindent = true
-vim.opt.smartindent = true
-vim.opt.shiftwidth = 4
-vim.opt.tabstop = 4
-vim.opt.encoding = "UTF-8"
-vim.opt.history = 5000
-vim.opt.clipboard = "unnamedplus"
-vim.opt.laststatus = 2
-vim.opt.updatetime = 300
-vim.opt.signcolumn = "yes"
-vim.opt.cindent = true
-vim.opt.linebreak = true
-vim.opt.termguicolors = true
 vim.opt.shell = "/bin/zsh"
+vim.opt.shiftwidth = 4
+vim.opt.signcolumn = "yes"
+vim.opt.spell = true
+vim.opt.spelllang = 'en,pt'
 vim.opt.splitright = true
-vim.opt.wrap = false
+vim.opt.tabstop = 4
+vim.opt.termguicolors = true
+vim.opt.updatetime = 300
+vim.opt.virtualedit = "all"
 vim.opt.winborder = 'rounded'
-vim.opt.completeopt:append("noselect")
-vim.cmd("colorscheme vscode")
+vim.opt.wrap = false
+vim.cmd.colorscheme("vscode")
 
-vim.diagnostic.config {
+vim.diagnostic.config({
     signs = {
         text = {
             [vim.diagnostic.severity.ERROR] = "✘",
@@ -43,7 +45,10 @@ vim.diagnostic.config {
     float = {
         source = "always",
     },
-}
+})
+
+vim.api.nvim_set_hl(0, "CursorColumn", { bg = "#303030" })
+vim.api.nvim_set_hl(0, "CursorLine", { bg = "#303030" })
 
 vim.api.nvim_create_autocmd({ "VimEnter" }, {
     callback = function(_)
@@ -68,6 +73,5 @@ vim.api.nvim_create_autocmd("FileType", {
         vim.treesitter.start()
         vim.wo.foldmethod = "expr"
         vim.wo.foldexpr = "v:lua.vim.treesitter.foldexpr()"
-        vim.cmd("silent! %foldopen!")
     end,
 })

@@ -1,19 +1,3 @@
----@diagnostic disable-next-line: unused-function, unused-local
-local function accept_nes_suggestion(cmp)
-    if vim.b[vim.api.nvim_get_current_buf()].nes_state then
-        cmp.hide()
-        return (
-            require("copilot-lsp.nes").apply_pending_nes()
-            and require("copilot-lsp.nes").walk_cursor_end_edit()
-        )
-    end
-    if cmp.snippet_active() then
-        return cmp.accept()
-    else
-        return cmp.select_and_accept()
-    end
-end
-
 return {
     {
         'saghen/blink.cmp',
@@ -24,19 +8,9 @@ return {
         version = '1.*',
         opts = {
             enabled = function() return not vim.tbl_contains({ "markdown", "snacks_picker_list" }, vim.bo.filetype) end,
-            keymap = {
-                preset = 'enter',
-                ['<Esc>'] = { 'hide', 'fallback' },
-                -- ['<Up>'] = { 'fallback' },
-                -- ['<Down>'] = { 'fallback' },
-                -- ['<Tab>'] = { 'select_next', accept_nes_suggestion, 'fallback' },
-                -- ['<S-Tab>'] = { 'select_prev', 'fallback' },
-            },
+            keymap = { preset = 'enter', },
             cmdline = {
-                keymap = {
-                    preset = 'inherit',
-                    -- ['<Tab>'] = { 'show', 'select_next', 'fallback' },
-                },
+                keymap = { preset = 'inherit', },
                 completion = { menu = { auto_show = true } },
             },
             appearance = {
