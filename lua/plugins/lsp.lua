@@ -1,14 +1,21 @@
 return {
     {
-        "mason-org/mason-lspconfig.nvim", -- https://github.com/mason-org/mason-lspconfig.nvim
+        "mason-org/mason.nvim",
+        opts = {},
+        keys = {
+            { "M", "<cmd>Mason<CR>", desc = "Mason" },
+        }
+    },
+    {
+        "mason-org/mason-lspconfig.nvim",
         opts = {},
         dependencies = {
-            { "mason-org/mason.nvim", opts = {} },
+            "mason-org/mason.nvim",
             "neovim/nvim-lspconfig",
         },
     },
     {
-        "neovim/nvim-lspconfig", -- https://github.com/neovim/nvim-lspconfig
+        "neovim/nvim-lspconfig",
         cmd = { "LspInfo", "LspInstall", "LspStart" },
         event = { "BufReadPre", "BufNewFile" },
         dependencies = { "saghen/blink.cmp", },
@@ -25,7 +32,7 @@ return {
                 desc = "LSP actions",
                 callback = function(event)
                     vim.lsp.inlay_hint.enable(true, { client_id = event.data.client_id, bufnr = event.buf })
-                    vim.lsp.codelens.enable(true, { client_id = event.data.client_id, bufnr = event.buf })
+                    vim.lsp.codelens.enable(true, { client_id = event.data.client_id })
 
                     -- -- Completion
                     -- vim.lsp.completion.enable(true, event.data.client_id, event.buf, {

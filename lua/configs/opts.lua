@@ -16,13 +16,13 @@ vim.opt.number = true
 vim.opt.shell = "/bin/zsh"
 vim.opt.shiftwidth = 4
 vim.opt.signcolumn = "yes"
-vim.opt.spell = true
+-- vim.opt.spell = true
 vim.opt.spelllang = 'en,pt'
 vim.opt.splitright = true
 vim.opt.tabstop = 4
 vim.opt.termguicolors = true
 vim.opt.updatetime = 300
-vim.opt.virtualedit = "all"
+-- vim.opt.virtualedit = "all"
 vim.opt.winborder = 'rounded'
 vim.opt.wrap = false
 vim.cmd.colorscheme("vscode")

@@ -10,6 +10,8 @@ return {
             -- vim.g["conjure#client#clojure#nrepl#connection#auto_repl#enabled"] = false
             vim.g["conjure#client#clojure#nrepl#connection#auto_repl#hidden"] = true
             vim.g["conjure#client#clojure#nrepl#connection#auto_repl#cmd"] = "lein repl"
+
+            vim.g["conjure#client#clojure#nrepl#test#raw_out"] = true
         end,
         keys = {
             { "<localleader>dd", "<cmd>ConjureCljDebugInit<CR>",                 desc = "Start Clojure debugging" },
