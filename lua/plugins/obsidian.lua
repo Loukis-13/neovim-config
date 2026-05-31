@@ -104,4 +104,12 @@ return {
         lazy = false,
         dependencies = { "saghen/blink.cmp" },
     },
+    {
+        "snapwich/obsidian-tasks.nvim",
+        event = {
+            "BufReadPre " .. vim.fn.expand("~") .. "/vaults/*.md",
+            "BufNewFile " .. vim.fn.expand("~") .. "/vaults/*.md",
+        },
+        opts = {},
+    },
 }

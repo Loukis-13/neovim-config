@@ -10,7 +10,10 @@ return {
             enabled = function() return not vim.tbl_contains({ "markdown", "snacks_picker_list" }, vim.bo.filetype) end,
             keymap = { preset = 'enter', },
             cmdline = {
-                keymap = { preset = 'inherit', },
+                keymap = {
+                    preset = 'inherit',
+                    ['<Esc>'] = { "cancel", "fallback" }
+                },
                 completion = { menu = { auto_show = true } },
             },
             appearance = {
@@ -34,13 +37,17 @@ return {
                 preset = "default",
             },
             sources = {
-                default = { 'lsp', 'path', 'snippets', 'buffer', "copilot" },
+                default = { 'lsp', 'path', 'snippets', 'buffer', "copilot", "obsidian-tasks" },
                 providers = {
                     copilot = {
                         name = "copilot",
                         module = "blink-copilot",
                         score_offset = 100,
                         async = true,
+                    },
+                    ["obsidian-tasks"] = {
+                        module = "obsidian-tasks.cmp.source",
+                        name = "ObsidianTasks",
                     },
                 }
             },
