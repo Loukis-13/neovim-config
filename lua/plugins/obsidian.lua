@@ -4,14 +4,14 @@ return {
         version = "*",
         lazy = true,
         event = {
-            "BufReadPre " .. vim.fn.expand "~" .. "/vaults/*.md",
-            "BufNewFile " .. vim.fn.expand "~" .. "/vaults/*.md",
+            "BufReadPre " .. vim.fn.expand("~") .. "/vaults/*.md",
+            "BufNewFile " .. vim.fn.expand("~") .. "/vaults/*.md",
         },
         dependencies = {
             "saghen/blink.cmp",
         },
         init = function()
-            local vaults_path = vim.fn.expand "~" .. "/vaults"
+            local vaults_path = vim.fn.expand("~") .. "/vaults"
             local git_opts = { cwd = vaults_path, text = true }
 
             local function show_and_wait(msgs)
@@ -37,13 +37,13 @@ return {
                         return
                     end
                     vim.notify("Pulling changes...")
-                    local result = vim.system({ 'git', 'pull' }, git_opts):wait()
+                    local result = vim.system({ "git", "pull" }, git_opts):wait()
                     if result.code == 0 then
                         vim.notify(result.stdout, vim.log.levels.INFO)
                     else
                         vim.notify(result.stderr, vim.log.levels.ERROR)
                     end
-                end
+                end,
             })
 
             -- Cmmit changes on exit
@@ -55,7 +55,7 @@ return {
 
                     vim.notify("Commiting changes...")
 
-                    local status = vim.system({ 'git', 'status', '--porcelain' }, git_opts):wait()
+                    local status = vim.system({ "git", "status", "--porcelain" }, git_opts):wait()
 
                     if status.code ~= 0 then
                         show_and_wait({ "Git status failed: " .. status.stderr .. "\n", "ErrorMsg" })
@@ -68,9 +68,9 @@ return {
                     end
 
                     local commit_msg = vim.fn.strftime("%Y-%m-%d %H:%M") .. " - " .. vim.fn.expand("$USER")
-                    local add_result = vim.system({ 'git', 'add', '-A' }, git_opts):wait()
-                    local commit_result = vim.system({ 'git', 'commit', '-m', commit_msg }, git_opts):wait()
-                    local push_result = vim.system({ 'git', 'push' }, git_opts):wait()
+                    local add_result = vim.system({ "git", "add", "-A" }, git_opts):wait()
+                    local commit_result = vim.system({ "git", "commit", "-m", commit_msg }, git_opts):wait()
+                    local push_result = vim.system({ "git", "push" }, git_opts):wait()
 
                     local chunks = {}
                     if push_result.code == 0 then
@@ -82,22 +82,37 @@ return {
                     add_output(chunks, commit_result, "Commit")
                     add_output(chunks, push_result, "Push")
                     show_and_wait(chunks)
-                end
+                end,
             })
         end,
-        opts = {
-            legacy_commands = false,
-            workspaces = {
-                {
-                    name = "personal",
-                    path = "~/vaults/personal",
+        config = function()
+            require("obsidian").setup({
+                legacy_commands = false,
+                workspaces = {
+                    {
+                        name = "personal",
+                        path = "~/vaults/personal",
+                    },
+                    {
+                        name = "nubank",
+                        path = "~/vaults/nubank",
+                    },
                 },
-                {
-                    name = "nubank",
-                    path = "~/vaults/nubank",
+                note = {
+                    id_func = require("obsidian.builtin").title_id,
                 },
-            },
-        },
+                checkbox = {
+                    enabled = true,
+                    create_new = true,
+                    order = { " ", "/", "x" },
+                },
+                daily_notes = {
+                    enabled = true,
+                    folder = "daily-notes",
+                    template = "daily-notes/template.md",
+                },
+            })
+        end,
     },
     {
         "OXY2DEV/markview.nvim",
