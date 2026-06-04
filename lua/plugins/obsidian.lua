@@ -4,11 +4,12 @@ return {
         version = "*",
         lazy = true,
         event = {
-            "BufReadPre " .. vim.fn.expand("~") .. "/vaults/*.md",
-            "BufNewFile " .. vim.fn.expand("~") .. "/vaults/*.md",
+            "BufReadPre */vaults/*.md",
+            "BufNewFile */vaults/*.md",
         },
         dependencies = {
             "saghen/blink.cmp",
+            { "snapwich/obsidian-tasks.nvim", opts = {} },
         },
         init = function()
             local vaults_path = vim.fn.expand("~") .. "/vaults"
@@ -37,12 +38,15 @@ return {
                         return
                     end
                     vim.notify("Pulling changes...")
-                    local result = vim.system({ "git", "pull" }, git_opts):wait()
-                    if result.code == 0 then
-                        vim.notify(result.stdout, vim.log.levels.INFO)
-                    else
-                        vim.notify(result.stderr, vim.log.levels.ERROR)
-                    end
+                    vim.system({ "git", "pull", "--ff-only" }, git_opts, function(result)
+                        vim.schedule(function()
+                            if result.code == 0 then
+                                vim.notify(result.stdout, vim.log.levels.INFO)
+                            else
+                                vim.notify(result.stderr, vim.log.levels.ERROR)
+                            end
+                        end)
+                    end)
                 end,
             })
 
@@ -55,15 +59,10 @@ return {
 
                     vim.notify("Commiting changes...")
 
-                    local status = vim.system({ "git", "status", "--porcelain" }, git_opts):wait()
+                    local status = vim.system({ "git", "diff-index", "--quiet", "HEAD", "--" }, git_opts):wait()
 
-                    if status.code ~= 0 then
-                        show_and_wait({ "Git status failed: " .. status.stderr .. "\n", "ErrorMsg" })
-                        return
-                    end
-
-                    if status.stdout == "" then
-                        show_and_wait({ "No changes to sync\n", "MoreMsg" })
+                    if status.code == 0 then
+                        vim.notify("No changes to sync")
                         return
                     end
 
@@ -118,13 +117,5 @@ return {
         "OXY2DEV/markview.nvim",
         lazy = false,
         dependencies = { "saghen/blink.cmp" },
-    },
-    {
-        "snapwich/obsidian-tasks.nvim",
-        event = {
-            "BufReadPre " .. vim.fn.expand("~") .. "/vaults/*.md",
-            "BufNewFile " .. vim.fn.expand("~") .. "/vaults/*.md",
-        },
-        opts = {},
     },
 }

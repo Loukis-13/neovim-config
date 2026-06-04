@@ -6,12 +6,14 @@ return {
             vim.g["conjure#mapping#doc_word"] = false -- Disable the documentation mapping
             -- vim.g["conjure#log#fold#enabled"] = true
 
-            vim.g["conjure#client#clojure#nrepl#test#current_form_names"] = { "deftest", "defflow", "defspec" }
-            -- vim.g["conjure#client#clojure#nrepl#connection#auto_repl#enabled"] = false
             vim.g["conjure#client#clojure#nrepl#connection#auto_repl#hidden"] = true
             vim.g["conjure#client#clojure#nrepl#connection#auto_repl#cmd"] = "lein repl"
 
+            vim.g["conjure#client#clojure#nrepl#test#current_form_names"] = { "deftest", "defflow", "defspec" }
             vim.g["conjure#client#clojure#nrepl#test#raw_out"] = true
+
+            vim.g["conjure#client#clojure#nrepl#refresh#backend"] = "clj-reload"
+            vim.g["conjure#client#clojure#nrepl#refresh#dirs"] = { "src", "test" }
         end,
         keys = {
             { "<localleader>dd", "<cmd>ConjureCljDebugInit<CR>",                 desc = "Start Clojure debugging" },
