@@ -12,7 +12,7 @@ return {
             vim.g["conjure#client#clojure#nrepl#test#current_form_names"] = { "deftest", "defflow", "defspec" }
             vim.g["conjure#client#clojure#nrepl#test#raw_out"] = true
 
-            vim.g["conjure#client#clojure#nrepl#refresh#backend"] = "clj-reload"
+            -- vim.g["conjure#client#clojure#nrepl#refresh#backend"] = "clj-reload"
             vim.g["conjure#client#clojure#nrepl#refresh#dirs"] = { "src", "test" }
         end,
         keys = {

@@ -108,7 +108,7 @@ return {
                 daily_notes = {
                     enabled = true,
                     folder = "daily-notes",
-                    template = "daily-notes/template.md",
+                    template = "templates/daily-notes.md",
                 },
             })
         end,
