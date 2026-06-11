@@ -52,7 +52,7 @@ vim.api.nvim_set_hl(0, "CursorLine", { bg = "#303030" })
 
 vim.api.nvim_create_autocmd({ "VimEnter" }, {
     callback = function(_)
-        for _, v in ipairs(vim.v.argv) do
+        for _, v in ipairs(vim.list_slice(vim.v.argv, 2)) do
             if vim.fn.isdirectory(v) == 1 then
                 vim.cmd.cd(v)
                 break

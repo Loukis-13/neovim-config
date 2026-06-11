@@ -34,7 +34,7 @@ return {
             vim.api.nvim_create_autocmd("User", {
                 pattern = "VeryLazy",
                 callback = function()
-                    if not vim.startswith(vim.fn.getcwd(), vaults_path) then
+                    if not string.find(vim.fn.system('git remote get-url origin'), "obsidian-notes.git", 1, true) then
                         return
                     end
                     vim.notify("Pulling changes...")
@@ -53,7 +53,7 @@ return {
             -- Cmmit changes on exit
             vim.api.nvim_create_autocmd("VimLeavePre", {
                 callback = function()
-                    if not vim.startswith(vim.fn.getcwd(), vaults_path) then
+                    if not string.find(vim.fn.system('git remote get-url origin'), "obsidian-notes.git", 1, true) then
                         return
                     end
 
