@@ -52,6 +52,11 @@ vim.keymap.set({ "n", "v" }, "<A-Right>", "e", { noremap = true })
 vim.keymap.set({ "n", "v" }, "<A-Left>", "b", { noremap = true })
 vim.keymap.set({ "i" }, "<A-Right>", "<C-o>e<Right>", { noremap = true })
 vim.keymap.set({ "i" }, "<A-Left>", "<C-o>b", { noremap = true })
+-- <A-f>/<A-b> exception
+vim.keymap.set({ "n", "v" }, "<A-f>", "e", { noremap = true })
+vim.keymap.set({ "n", "v" }, "<A-b>", "b", { noremap = true })
+vim.keymap.set({ "i" }, "<A-f>", "<C-o>e<Right>", { noremap = true })
+vim.keymap.set({ "i" }, "<A-b>", "<C-o>b", { noremap = true })
 
 -- Surround selections
 vim.keymap.set("v", "(", "<esc>`>a)<esc>`<i(<esc>gv", { remap = false })

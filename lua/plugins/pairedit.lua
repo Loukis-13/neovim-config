@@ -27,6 +27,8 @@ return {
                         repeatable = false,
                         mode = { "n", "i", "x", "o", "v" },
                     },
+                    ["<A-f>"] = { paredit.api.move_to_next_element_tail, "Jump to next element tail", repeatable = false, mode = { "n", "i", "x", "o", "v" } },
+                    ["<A-b>"] = { paredit.api.move_to_prev_element_head, "Jump to previous element head", repeatable = false, mode = { "n", "i", "x", "o", "v" } },
                     ["<A-Up>"] = {
                         paredit.api.drag_element_backwards,
                         "Slurp forwards",
@@ -37,9 +39,9 @@ return {
                         "Barf backwards",
                         mode = { "n", "x", "o", "v" },
                     },
-                }
+                },
             })
-        end
+        end,
     },
     {
         "windwp/nvim-autopairs", -- https://github.com/windwp/nvim-autopairs
@@ -49,5 +51,5 @@ return {
     {
         "windwp/nvim-ts-autotag",
         opts = {},
-    }
+    },
 }

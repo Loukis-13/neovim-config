@@ -3,6 +3,10 @@
     "lazy.nvim": {
       "rev": "85c7ff3711b730b4030d03144f6db6375044ae82",
       "src": "https://github.com/folke/lazy.nvim"
+    },
+    "markview.nvim": {
+      "rev": "190bb227c9d3eb4451b81fa16ea3d2efde2d67c5",
+      "src": "https://github.com/OXY2DEV/markview.nvim"
     }
   }
 }

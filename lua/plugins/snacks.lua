@@ -10,19 +10,19 @@ return {
             lazygit = {
                 config = {
                     os = {
-                        edit = '[ -z "\"$NVIM\"" ] && (nvim -- {{filename}}) || (nvim --server "\"$NVIM\"" --remote-send "\"q\"" && nvim --server "\"$NVIM\"" --remote {{filename}})'
-                    }
-                }
+                        edit = '[ -z "$NVIM" ] && (nvim -- {{filename}}) || (nvim --server "$NVIM" --remote-send "q" && nvim --server "$NVIM" --remote {{filename}})',
+                    },
+                },
             },
             bigfile = {},
             image = {},
             quickfile = {},
             explorer = {},
-            -- scroll = {},   -- no noticeble changes
+            -- scroll = {},   -- no noticeable changes
             -- notifier = {},
             statuscolumn = {
                 right = { "mark", "sign" },
-                left = { "fold", "git" }
+                left = { "fold", "git" },
             },
             picker = {
                 sources = {
@@ -33,11 +33,11 @@ return {
                                     ["<c-b>"] = { "cancel", mode = { "i", "n" } },
                                     ["<c-u>"] = { "preview_scroll_up", mode = { "i", "n" } },
                                     ["<c-d>"] = { "preview_scroll_down", mode = { "i", "n" } },
-                                }
-                            }
-                        }
-                    }
-                }
+                                },
+                            },
+                        },
+                    },
+                },
             },
             dashboard = {
                 sections = {
@@ -73,7 +73,7 @@ return {
                             end
                         end
                         return entries
-                    end
+                    end,
                 },
             },
         },

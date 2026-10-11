@@ -1,7 +1,7 @@
 return {
     {
         "Loukis-13/sync.nvim",
-        opts = { repository = "obsidian-notes" },
+        opts = { repository = "obsidian-notes", sync_interval = 60 },
     },
     {
         "obsidian-nvim/obsidian.nvim",
