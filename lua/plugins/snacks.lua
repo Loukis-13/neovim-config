@@ -46,34 +46,6 @@ return {
                     { icon = " ", title = "Recent Files", section = "recent_files", indent = 2, padding = 1 },
                     { icon = " ", title = "Projects", section = "projects", indent = 2, padding = 1 },
                     { section = "startup" },
-
-                    { pane = 2, padding = 7 },
-                    { pane = 2, title = "Obsidian Notes" },
-                    function()
-                        local files = vim.fn.glob("~/vaults/**", true, true)
-                        local entries = {}
-                        for _, file in ipairs(files) do
-                            if vim.fn.isdirectory(file) == 1 then
-                                table.insert(entries, {
-                                    pane = 2,
-                                    indent = 2,
-                                    title = vim.fn.fnamemodify(file, ":t"),
-                                })
-                            else
-                                table.insert(entries, {
-                                    pane = 2,
-                                    indent = 3,
-                                    icon = "󰣏",
-                                    file = file,
-                                    action = function()
-                                        vim.cmd("edit " .. file)
-                                        vim.cmd.cd(vim.fn.fnamemodify(file, ":h"))
-                                    end,
-                                })
-                            end
-                        end
-                        return entries
-                    end,
                 },
             },
         },
