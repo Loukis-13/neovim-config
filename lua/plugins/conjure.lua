@@ -32,8 +32,4 @@ return {
             { "<localleader>de", "<cmd>ConjureCljDebugInput eval<CR>",           desc = "Debug eval" },
         }
     },
-    {
-        "Olical/aniseed",
-        ft = "fnl"
-    },
 }

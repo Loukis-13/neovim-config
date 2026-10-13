@@ -5,4 +5,5 @@ return {
     { "seandewar/actually-doom.nvim",    cmd = "Doom" },
     { "alanfortlink/blackjack.nvim",     cmd = "BlackJackNewGame" },
     { "Eandrju/cellular-automaton.nvim", cmd = "CellularAutomaton" },
+    { "Loukis-13/paint.nvim", opts={} }
 }
